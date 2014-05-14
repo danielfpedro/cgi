@@ -114,7 +114,7 @@
 											array(
 												'escape'=> false,
 												'id'=> 'open-modal',
-												'title'=> 'Mudar status',
+												'title'=> 'Alterar status',
 												'class'=> 'btn btn-default btn-xs btn-quick-action tt')
 										);
 									?>

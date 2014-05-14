@@ -117,6 +117,7 @@
 											array(
 												'escape'=> false,
 												'id'=> 'open-modal',
+												'title'=> 'Alterar status',
 												'class'=> 'btn btn-default btn-xs btn-quick-action tt')
 										);
 									?>
@@ -137,7 +138,11 @@
 												'action' => 'setSecretariaModal',
 												$indicacao['Indicacao']['id'],
 											),
-											array('escape'=> false, 'id'=> 'open-modal', 'class'=> 'btn btn-default btn-xs btn-quick-action')
+											array(
+												'escape'=> false,
+												'id'=> 'open-modal',
+												'title'=> 'Alterar secretaria',
+												'class'=> 'btn btn-default btn-xs btn-quick-action tt')
 										);
 									?>
 								</div>

@@ -2,13 +2,13 @@
 
 <?php echo $this->Form->create('Indicacao', array('type'=> 'POST')); ?>
 	<div style="padding: 15px;">
-		<h4>Atrituir secretária: <?php echo $indicacao['Indicacao']['uid']; ?></h4>
+		<h4>Indicação <?php echo $indicacao['Indicacao']['uid']; ?></h4>
 		<hr>
 			<div class="form-group">
 				<?php
 					echo $this->Form->input('secretaria_id',
 						array(
-							'label'=> false,
+							'label'=> 'Secretaria',
 							'class'=> 'form-control',
 							'value'=> $indicacao['Indicacao']['secretaria_id']
 						)
