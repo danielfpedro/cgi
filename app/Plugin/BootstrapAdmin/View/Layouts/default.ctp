@@ -17,16 +17,19 @@
 		echo $this->Html->script('/BootstrapAdmin/js/jquery.min');
 
 		echo $this->Html->script('/BootstrapAdmin/js/bootstrap.min');
-
-		echo $this->fetch('meta');
-		echo $this->fetch('css');
-		echo $this->fetch('script');
 	?>
 	<script type="text/javascript">
 		$(function(){
 			$('.tt').tooltip();
 		});
+		var webroot = '<?php echo $this->webroot;?>';
 	</script>
+
+	<?php
+		echo $this->fetch('meta');
+		echo $this->fetch('css');
+		echo $this->fetch('script');
+	?>
 </head>
 <body>
 

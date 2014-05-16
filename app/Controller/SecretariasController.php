@@ -8,7 +8,15 @@ App::uses('AppController', 'Controller');
  */
 class SecretariasController extends AppController {
 
-public $layout = 'BootstrapAdmin.default';	
+	public $layout = 'BootstrapAdmin.default';	
+
+	public function ranking_list() {
+		$secretarias = $this->Paginator->paginate();
+		// Debugger::dump($vereadores);
+		// exit();
+		$this->set(compact('secretarias'));
+	}
+
 /**
  * Components
  *

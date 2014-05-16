@@ -11,6 +11,29 @@ class IndicacoesController extends AppController {
 
 public $layout = 'BootstrapAdmin.default';	
 
+	public function getIndicacoesAutoComplete(){
+		$options = array();
+		if (!is_null($this->request->query['term'])) {
+			$q = str_replace(' ', '%', $this->request->query['term']);
+			$options['conditions'] = array('Indicacao.uid LIKE'=> '%'.$q.'%');
+		}
+		// Debugger::dump($options);
+		$options['limit'] = 10;
+		$query = $this->Indicacao->find('all', $options);
+		$indicacoes = array();
+
+		$i = 0;
+		foreach ($query as $row) {
+			$indicacoes[$i]['id'] = $row['Indicacao']['id'];
+			$indicacoes[$i]['label'] = $row['Indicacao']['uid'];
+			$i++;
+		}
+		$this->set(compact('indicacoes'));
+
+		echo json_encode($indicacoes);
+		$this->autoRender = false;
+	}
+
 	public function changeStatusModal($id = null) {
 
 		$indicacao = $this->Indicacao->find('first', array('conditions'=> array('Indicacao.id'=> $id)));
@@ -73,7 +96,7 @@ public $layout = 'BootstrapAdmin.default';
 		}
 		$q = str_replace(' ', '%', $this->request->query['q']);
 		$this->Indicacao->recursive = 2;
-		$this->Paginator->settings = array('Indicacao'=> array('conditions'=> array('Indicacao.uid LIKE' => '%'.$q.'%')));
+		$this->Paginator->settings = array('Indicacao'=> array('conditions'=> array('Indicacao.uid LIKE' => '%'.$q.'%'), 'order'=> 'Indicacao.created DESC'));
 		$this->set('indicacoes', $this->Paginator->paginate());
 	}
 

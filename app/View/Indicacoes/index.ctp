@@ -3,11 +3,11 @@
 
 <?php echo $this->Html->script('Indicacoes/index', array('inline'=> false)); ?>
 
-<div class="breadcrumb breadcrumb-admin">
+<ul class="breadcrumb breadcrumb-admin">
 	<li class="active">
 		Indicações
 	</li>
-</div>
+</ul>
 
 <div class="wrap-internal-page">
 	<?php echo $this->Session->flash(); ?>
@@ -63,7 +63,7 @@
 					<th style="width: 80px;">
 						<?php echo $this->Paginator->sort('data_indicacao', 'Data'); ?>
 					</th>
-					<th style="width: 100px;"></th>
+					<th style="width: 140px;"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -94,7 +94,8 @@
 											<?php
 												$autores = array();
 												foreach ($indicacao['Vereador'] as $vereador) {
-													$autores[] = $vereador['nome_parlamentar'] .
+													$autores[] = $vereador['name'] .
+													'"'.$vereador['nome_parlamentar'].'"' .
 													' ('.$vereador['Partido']['sigla'].')';
 												}
 												echo $this->Text->toList($autores, 'e');
@@ -152,6 +153,19 @@
 							</td>						
 							<td class="text-center">
 								<?php
+									echo $this->Html->link(
+										"<span class='glyphicon glyphicon-envelope'></span>",
+										array(
+											'controller'=> 'trocaMensagens',
+											'action' => 'index',
+											$indicacao['Indicacao']['id']),
+										array(
+											'class'=> 'btn btn-sm btn-primary tt',
+											'title'=> 'Mensagens',
+											'escape'=> false
+										)
+									);
+									echo "&nbsp;";
 									echo $this->Html->link(
 										"<span class='glyphicon glyphicon-pencil'></span>",
 										array(

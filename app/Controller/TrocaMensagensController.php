@@ -21,12 +21,27 @@ public $layout = 'BootstrapAdmin.default';
  *
  * @return void
  */
-	public function index() {
-		if (!isset($this->request->query['q'])) {
-			$this->request->query['q'] = '';
+	public function index($indicacao_id = null) {
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->TrocaMensagem->save($this->request->data)) {
+			} else {
+				$this->Session->flash('Ocorreu um erro ao enviar a sua mensagem', 'default', array('class'=> 'alert alert-danger'));
+			}
+			$this->redirect($this->referer());
 		}
-		$this->TrocaMensagem->recursive = 0;
+		
+		$indicacao = $this->TrocaMensagem->Indicacao->find('first', array('conditions'=> array('Indicacao.id'=> $indicacao_id)));
+
+		$this->TrocaMensagem->recursive = 3;
+		$this->Paginator->settings = array(
+			'TrocaMensagem'=> array(
+				'conditions'=> array('Indicacao.id' => $indicacao_id),
+				'order'=> 'TrocaMensagem.created DESC')
+			);
+
 		$this->set('trocaMensagens', $this->Paginator->paginate());
+
+		$this->set(compact('indicacao'));
 	}
 
 /**

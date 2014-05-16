@@ -27,13 +27,13 @@ class MainMenu extends AppModel {
 	public function getRelatorios(){
 		$items_menu = array(
 			array(
-				'label'=> 'Indicações',
+				'label'=> 'Vereadores',
 
-				'url'=> array('controller'=> 'indicacoes', 'action'=> 'index'),
+				'url'=> array('controller'=> 'vereadores', 'action'=> 'ranking_list'),
 			),
 			array(
-				'label'=> 'Projetos',
-				'url'=> array('controller'=> 'projetos', 'action'=> 'index'),
+				'label'=> 'Secretarias',
+				'url'=> array('controller'=> 'secretarias', 'action'=> 'ranking_list'),
 			)
 		);
 

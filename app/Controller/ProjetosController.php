@@ -79,7 +79,7 @@ class ProjetosController extends AppController {
 
 			// $this->Projeto->recursive = -1;
 			// $this->Projeto->contain = array('Indicacao'=> array('Usuario'));
-
+			$this->request->data['Projeto']['status_projeto_id'] = 1;
 			$this->Projeto->create();
 			if ($this->Projeto->save($this->request->data)) {
 				$this->Session->setFlash(__('O <strong>projeto</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));

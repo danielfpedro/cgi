@@ -2,14 +2,14 @@
 
 <?php  echo $this->Html->script('indicacoes/form', array('inline'=> false));?>
 
-<div class="breadcrumb breadcrumb-admin">
+<ul class="breadcrumb breadcrumb-admin">
 	<li>
 		<?php echo $this->Html->link('Indicações', array('action'=> 'index')) ?>
 	</li>
 	<li class="active">
 		Editar indicação
 	</li>
-</div>
+</ul>
 
 <div class="wrap-internal-page">
 	<div class="row">

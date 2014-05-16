@@ -8,7 +8,15 @@ App::uses('AppController', 'Controller');
  */
 class VereadoresController extends AppController {
 
-public $layout = 'BootstrapAdmin.default';	
+	public $layout = 'BootstrapAdmin.default';	
+
+	public function ranking_list() {
+		$vereadores = $this->Paginator->paginate();
+		// Debugger::dump($vereadores);
+		// exit();
+		$this->set(compact('vereadores'));
+	}
+
 /**
  * Components
  *
