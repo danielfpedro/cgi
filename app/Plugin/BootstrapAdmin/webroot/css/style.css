@@ -124,3 +124,12 @@ html, body {
 	height: 50px;
 	vertical-align: middle!important;
 }
+
+.container-flash{
+	position: absolute;
+	margin: 0;
+	bottom: 0;
+	left: 0;
+	width: 600px;
+	z-index: 20000;
+}

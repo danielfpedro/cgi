@@ -22,4 +22,18 @@
 			?>
 		</li>
 	<?php endforeach ?>	
+
+	<li class="text-muted" style="font-size: 11px; margin: 15px 0 5px 10px; text-transform: uppercase;">Cadastros</li>
+	<?php foreach ($items_menu_dados_extras as $item): ?>
+		<li class="<?php echo ($this->params['controller'] == $item['url']['controller'])? 'active': ''; ?>">
+			<?php
+				echo $this->Html->link(
+					$item['label'],
+					$item['url'],
+					array('escape'=> false)
+				)
+			?>
+		</li>
+	<?php endforeach ?>
+
 </ul>

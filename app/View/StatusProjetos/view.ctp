@@ -46,31 +46,35 @@
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Valor'); ?></th>
+		<th><?php echo __('Titulo'); ?></th>
 		<th><?php echo __('Descricao'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
+		<th><?php echo __('Endereco'); ?></th>
 		<th><?php echo __('Mapa Zoom'); ?></th>
 		<th><?php echo __('Mapa Latlng'); ?></th>
+		<th><?php echo __('Data Projeto'); ?></th>
+		<th><?php echo __('Valor'); ?></th>
+		<th><?php echo __('Created'); ?></th>
+		<th><?php echo __('Modified'); ?></th>
 		<th><?php echo __('Status Projeto Id'); ?></th>
 		<th><?php echo __('Bairro Id'); ?></th>
 		<th><?php echo __('Indicacao Id'); ?></th>
-		<th><?php echo __('Endereco'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($statusProjeto['Projeto'] as $projeto): ?>
 		<tr>
 			<td><?php echo $projeto['id']; ?></td>
-			<td><?php echo $projeto['valor']; ?></td>
+			<td><?php echo $projeto['titulo']; ?></td>
 			<td><?php echo $projeto['descricao']; ?></td>
-			<td><?php echo $projeto['created']; ?></td>
-			<td><?php echo $projeto['modified']; ?></td>
+			<td><?php echo $projeto['endereco']; ?></td>
 			<td><?php echo $projeto['mapa_zoom']; ?></td>
 			<td><?php echo $projeto['mapa_latlng']; ?></td>
+			<td><?php echo $projeto['data_projeto']; ?></td>
+			<td><?php echo $projeto['valor']; ?></td>
+			<td><?php echo $projeto['created']; ?></td>
+			<td><?php echo $projeto['modified']; ?></td>
 			<td><?php echo $projeto['status_projeto_id']; ?></td>
 			<td><?php echo $projeto['bairro_id']; ?></td>
 			<td><?php echo $projeto['indicacao_id']; ?></td>
-			<td><?php echo $projeto['endereco']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'projetos', 'action' => 'view', $projeto['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'projetos', 'action' => 'edit', $projeto['id'])); ?>

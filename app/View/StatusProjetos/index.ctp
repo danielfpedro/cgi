@@ -1,6 +1,6 @@
 <div class="breadcrumb breadcrumb-admin">
 	<li class="active">
-		StatusProjetos
+		Status de projetos
 	</li>
 </div>
 
@@ -9,7 +9,7 @@
 		<div class="col-md-12">
 			<?php
 			echo $this->Html->link(
-				"Novo status projeto",
+				"Novo status de projeto",
 				array('action'=> 'add'),
 				array('class'=> 'btn btn-success btn-novo',
 					'escape'=> false
@@ -41,20 +41,14 @@
 		<table class="table table-condensed table-hover table-striped table-admin">
 			<thead>
 				<tr>
-					<th>
-						<?php echo $this->Paginator->sort('id'); ?>
+					<th style="width: 60px;">
+						<?php echo $this->Paginator->sort('#'); ?>
 					</th>
 					<th>
-						<?php echo $this->Paginator->sort('name'); ?>
+						<?php echo $this->Paginator->sort('name', 'Nome'); ?>
 					</th>
-					<th>
+					<th style="width: 140px;" class="text-center">
 						<?php echo $this->Paginator->sort('ativo'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('created'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('modified'); ?>
 					</th>
 					<th></th>
 				</tr>
@@ -69,15 +63,11 @@
 							<td>
 								<?php echo h($statusProjeto['StatusProjeto']['name']); ?>
 							</td>
-							<td>
-								<?php echo h($statusProjeto['StatusProjeto']['ativo']); ?>
+							<td class="text-center">
+								<span class="label label-<?php echo ($statusProjeto['StatusProjeto']['ativo'])? 'success': 'danger'; ?>">
+									<?php echo ($statusProjeto['StatusProjeto']['ativo'])? 'ativado': 'desativado'; ?>
+								</span>
 							</td>
-							<td>
-								<?php echo h($statusProjeto['StatusProjeto']['created']); ?>
-							</td>
-							<td>
-								<?php echo h($statusProjeto['StatusProjeto']['modified']); ?>
-							</td>						
 							<td class="text-center" style="width:90px;">
 								<?php
 									echo $this->Html->link(

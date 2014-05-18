@@ -41,23 +41,17 @@
 		<table class="table table-condensed table-hover table-striped table-admin">
 			<thead>
 				<tr>
-					<th>
-						<?php echo $this->Paginator->sort('id'); ?>
+					<th style="width: 60px;">
+						<?php echo $this->Paginator->sort('id', '#'); ?>
 					</th>
 					<th>
-						<?php echo $this->Paginator->sort('nome'); ?>
+						<?php echo $this->Paginator->sort('name', 'Nome'); ?>
 					</th>
-					<th>
+					<th style="width: 120px;">
 						<?php echo $this->Paginator->sort('sigla'); ?>
 					</th>
-					<th>
+					<th style="width: 140px;" class="text-center">
 						<?php echo $this->Paginator->sort('ativo'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('modified'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('created'); ?>
 					</th>
 					<th></th>
 				</tr>
@@ -70,20 +64,16 @@
 								<?php echo h($partido['Partido']['id']); ?>
 							</td>
 							<td>
-								<?php echo h($partido['Partido']['nome']); ?>
+								<?php echo h($partido['Partido']['name']); ?>
 							</td>
 							<td>
 								<?php echo h($partido['Partido']['sigla']); ?>
 							</td>
-							<td>
-								<?php echo h($partido['Partido']['ativo']); ?>
+							<td class="text-center">
+								<span class="label label-<?php echo ($partido['Partido']['ativo'])? 'success': 'danger'; ?>">
+									<?php echo ($partido['Partido']['ativo'])? 'ativado': 'desativado'; ?>
+								</span>
 							</td>
-							<td>
-								<?php echo h($partido['Partido']['modified']); ?>
-							</td>
-							<td>
-								<?php echo h($partido['Partido']['created']); ?>
-							</td>						
 							<td class="text-center" style="width:90px;">
 								<?php
 									echo $this->Html->link(

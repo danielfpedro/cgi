@@ -25,7 +25,16 @@ public $layout = 'BootstrapAdmin.default';
 		if (!isset($this->request->query['q'])) {
 			$this->request->query['q'] = '';
 		}
+
+		$q_internal = str_replace(' ', '%', $this->request->query['q']);
+
 		$this->StatusIndicacao->recursive = 0;
+
+		$this->Paginator->settings = array('conditions'=> array(
+			'StatusIndicacao.name LIKE'=> '%'.$q_internal.'%'
+			)
+		);
+
 		$this->set('statusIndicacoes', $this->Paginator->paginate());
 	}
 
@@ -53,10 +62,10 @@ public $layout = 'BootstrapAdmin.default';
 		if ($this->request->is('post')) {
 			$this->StatusIndicacao->create();
 			if ($this->StatusIndicacao->save($this->request->data)) {
-				$this->Session->setFlash(__('O <strong>status indicacao</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
+				$this->Session->setFlash(__('O <strong>status indicação</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('O <strong>status indicacao</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				$this->Session->setFlash(__('O <strong>status indicação</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		}
 	}
@@ -70,14 +79,14 @@ public $layout = 'BootstrapAdmin.default';
  */
 	public function edit($id = null) {
 		if (!$this->StatusIndicacao->exists($id)) {
-			throw new NotFoundException(__('Invalid status indicacao'));
+			throw new NotFoundException(__('Status indicação inválida.'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->StatusIndicacao->save($this->request->data)) {
-				$this->Session->setFlash(__('The status indicacao has been saved.'));
+				$this->Session->setFlash(__('O <strong>status indicação</strong> foi editado com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The status indicacao could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('O <strong>status indicação</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));$this->Session->setFlash(__('The status indicacao could not be saved. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('StatusIndicacao.' . $this->StatusIndicacao->primaryKey => $id));
@@ -99,9 +108,9 @@ public $layout = 'BootstrapAdmin.default';
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->StatusIndicacao->delete()) {
-			$this->Session->setFlash(__('O <strong>status indicacao</strong> foi deletado com sucesso.'), 'default', array('class'=> 'alert alert-success'));
+			$this->Session->setFlash(__('O <strong>status indicacão</strong> foi deletado com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 		} else {
-			$this->Session->setFlash(__('O <strong>status indicacao</strong> não pode ser deletado, por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+			$this->Session->setFlash(__('O <strong>status indicacão</strong> não pode ser deletado, por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

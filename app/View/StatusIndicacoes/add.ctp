@@ -1,30 +1,18 @@
 <div class="breadcrumb breadcrumb-admin">
 	<li>
-		<?php echo $this->Html->link('StatusIndicacoes', array('action'=> 'index')) ?>
+		<?php echo $this->Html->link('Status de indicações', array('action'=> 'index')) ?>
 	</li>
 	<li class="active">
-		Status Indicacao
+		Adicionar status de indicação
 	</li>
 </div>
 
 <div class="wrap-internal-page">
 	<div class="row">
-		<div class="col-md-11">
+		<div class="col-md-12">
 			<?php echo $this->Form->create('StatusIndicacao'); ?>
-				
-		<div class="form-group">
-			<?php echo $this->Form->input('name', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
+				<?php echo $this->element('StatusIndicacoes/form'); ?>
+			<?php echo $this->Form->end(); ?>	
 		</div>
-		<div class="form-group">
-			<?php echo $this->Form->input('ativo', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
-		</div>
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-ok"></span> Salvar
-			</button>
-		</div>		</div>
-		
-
-	<?php echo $this->Form->end(); ?>
 	</div>
 </div>

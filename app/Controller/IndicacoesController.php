@@ -130,15 +130,10 @@ public $layout = 'BootstrapAdmin.default';
 			$this->request->data['Indicacao']['data_indicacao'] = $this->DataUtil->setPadrao($this->request->data['Indicacao']['data_indicacao']);
 			$this->Indicacao->create();
 			if ($this->Indicacao->save($this->request->data)) {
-				$this->Session->setFlash(__('A <strong>indicacao</strong> foi salva com sucesso.'), 'default', array('class'=> 'alert alert-success'));
+				$this->Session->setFlash(__('A <strong>indicação</strong> foi salva com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$validationErrorsList = $this->validationErrorsToList($this->Indicacao->validationErrors);
-				$this
-					->Session
-					->setFlash(__('A <strong>indicacao</strong> não pode ser salva:<br>' . $validationErrorsList),
-						'default',
-						array('class'=> 'alert alert-danger'));
+				$this->Session->setFlash(__('A <strong>indicação</strong> não pode ser salva, por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		}
 
@@ -166,19 +161,14 @@ public $layout = 'BootstrapAdmin.default';
 			throw new NotFoundException(__('Invalid indicacao'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			$this->request->data['Indicacao']['id'] = $id;
+
 			$this->request->data['Indicacao']['status_indicacao_id'] = 1;
 			$this->request->data['Indicacao']['data_indicacao'] = $this->DataUtil->setPadrao($this->request->data['Indicacao']['data_indicacao']);
 			if ($this->Indicacao->save($this->request->data)) {
-				$this->Session->setFlash(__('The indicacao has been saved.'));
+				$this->Session->setFlash(__('A <strong>indicação</strong> foi salva com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$validationErrorsList = $this->validationErrorsToList($this->Indicacao->validationErrors);
-				$this
-					->Session
-					->setFlash(__('A <strong>indicacao</strong> não pode ser salva:<br>' . $validationErrorsList),
-						'default',
-						array('class'=> 'alert alert-danger'));
+				$this->Session->setFlash(__('A <strong>indicação</strong> não pode ser salva, por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		} else {
 			$options = array('conditions' => array('Indicacao.' . $this->Indicacao->primaryKey => $id));

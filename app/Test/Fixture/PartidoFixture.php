@@ -12,7 +12,7 @@ class PartidoFixture extends CakeTestFixture {
  */
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'nome' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 80, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 80, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'sigla' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 10, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'ativo' => array('type' => 'integer', 'null' => false, 'default' => '1', 'length' => 4),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
@@ -31,11 +31,11 @@ class PartidoFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'nome' => 'Lorem ipsum dolor sit amet',
+			'name' => 'Lorem ipsum dolor sit amet',
 			'sigla' => 'Lorem ip',
 			'ativo' => 1,
-			'modified' => '2014-05-12 05:40:55',
-			'created' => '2014-05-12 05:40:55'
+			'modified' => '2014-05-18 07:37:47',
+			'created' => '2014-05-18 07:37:47'
 		),
 	);
 

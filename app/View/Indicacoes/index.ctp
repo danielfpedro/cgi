@@ -58,7 +58,7 @@
 						<?php echo $this->Paginator->sort('status_indicacao_id', 'Status'); ?>
 					</th>
 					<th style="width: 180px;">
-						<?php echo $this->Paginator->sort('secretaria_id', 'Secretária responsável'); ?>
+						<?php echo $this->Paginator->sort('secretaria_id', 'Secretaria responsável'); ?>
 					</th>					
 					<th style="width: 80px;">
 						<?php echo $this->Paginator->sort('data_indicacao', 'Data'); ?>
@@ -128,7 +128,7 @@
 								<?php if (!is_null($indicacao['Indicacao']['secretaria_id'])): ?>
 									<?php echo $indicacao['Secretaria']['name']; ?>
 								<?php else: ?>
-									<em>Nenhuma atribuída</em>
+									<em class="text-muted">Nenhuma atribuída</em>
 								<?php endif ?>
 								<div style="position: relative;">
 									<?php

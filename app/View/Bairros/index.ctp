@@ -41,20 +41,14 @@
 		<table class="table table-condensed table-hover table-striped table-admin">
 			<thead>
 				<tr>
-					<th>
-						<?php echo $this->Paginator->sort('id'); ?>
+					<th style="width: 60px;">
+						<?php echo $this->Paginator->sort('#'); ?>
 					</th>
 					<th>
-						<?php echo $this->Paginator->sort('name'); ?>
+						<?php echo $this->Paginator->sort('name', 'Nome'); ?>
 					</th>
-					<th>
+					<th style="width: 140px;" class="text-center">
 						<?php echo $this->Paginator->sort('ativo'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('created'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('modified'); ?>
 					</th>
 					<th></th>
 				</tr>
@@ -69,15 +63,11 @@
 							<td>
 								<?php echo h($bairro['Bairro']['name']); ?>
 							</td>
-							<td>
-								<?php echo h($bairro['Bairro']['ativo']); ?>
+							<td class="text-center">
+								<span class="label label-<?php echo ($bairro['Bairro']['ativo'])? 'success': 'danger'; ?>">
+									<?php echo ($bairro['Bairro']['ativo'])? 'ativado': 'desativado'; ?>
+								</span>
 							</td>
-							<td>
-								<?php echo h($bairro['Bairro']['created']); ?>
-							</td>
-							<td>
-								<?php echo h($bairro['Bairro']['modified']); ?>
-							</td>						
 							<td class="text-center" style="width:90px;">
 								<?php
 									echo $this->Html->link(

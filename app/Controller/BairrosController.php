@@ -25,7 +25,16 @@ public $layout = 'BootstrapAdmin.default';
 		if (!isset($this->request->query['q'])) {
 			$this->request->query['q'] = '';
 		}
+
+		$q_internal = str_replace(' ', '%', $this->request->query['q']);
+
 		$this->Bairro->recursive = 0;
+
+		$this->Paginator->settings = array('conditions'=> array(
+			'Bairro.name LIKE'=> '%'.$q_internal.'%'
+			)
+		);
+
 		$this->set('bairros', $this->Paginator->paginate());
 	}
 
@@ -74,10 +83,10 @@ public $layout = 'BootstrapAdmin.default';
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Bairro->save($this->request->data)) {
-				$this->Session->setFlash(__('The bairro has been saved.'));
+				$this->Session->setFlash(__('O <strong>bairro</strong> foi editado com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The bairro could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('O <strong>bairro</strong> não pode ser editado. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));$this->Session->setFlash(__('The bairro could not be saved. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Bairro.' . $this->Bairro->primaryKey => $id));

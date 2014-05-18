@@ -49,6 +49,9 @@
 			</div>
 		</div>
 	</div>
+	<div class="container-flash">
+		<?php echo $this->Session->flash(); ?>	
+	</div>
 	<?php //echo $this->element('sql_dump'); ?>
 </body>
 </html>

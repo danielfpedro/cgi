@@ -5,11 +5,11 @@
 </div>
 
 <div class="wrap-internal-page">
-	<?php echo $this->Session->flash(); ?>	<div class="row">
+	<div class="row">
 		<div class="col-md-12">
 			<?php
 			echo $this->Html->link(
-				"Novo vereador",
+				"Nova vereador",
 				array('action'=> 'add'),
 				array('class'=> 'btn btn-success btn-novo',
 					'escape'=> false
@@ -42,25 +42,19 @@
 			<thead>
 				<tr>
 					<th>
-						<?php echo $this->Paginator->sort('id'); ?>
+						<?php echo $this->Paginator->sort('id', '#'); ?>
 					</th>
 					<th>
-						<?php echo $this->Paginator->sort('nome'); ?>
+						<?php echo $this->Paginator->sort('name'); ?>
 					</th>
 					<th>
 						<?php echo $this->Paginator->sort('nome_parlamentar'); ?>
 					</th>
 					<th>
-						<?php echo $this->Paginator->sort('ativo'); ?>
-					</th>
-					<th>
 						<?php echo $this->Paginator->sort('partido_id'); ?>
 					</th>
-					<th>
-						<?php echo $this->Paginator->sort('created'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('modified'); ?>
+					<th style="width: 140px;" class="text-center">
+						<?php echo $this->Paginator->sort('ativo'); ?>
 					</th>
 					<th></th>
 				</tr>
@@ -69,36 +63,23 @@
 				<?php if (!empty($vereadores)): ?>
 					<?php foreach ($vereadores as $vereador): ?>						
 						<tr>
-							<td>
+							<td style="width: 60px;">
 								<?php echo h($vereador['Vereador']['id']); ?>
 							</td>
 							<td>
-								<?php echo h($vereador['Vereador']['nome']); ?>
+								<?php echo h($vereador['Vereador']['name']); ?>
 							</td>
-							<td>
+							<td style="width: 240px;">
 								<?php echo h($vereador['Vereador']['nome_parlamentar']); ?>
 							</td>
-							<td>
-								<?php echo h($vereador['Vereador']['ativo']); ?>
+							<td style="width: 120px;">
+								<?php echo $vereador['Partido']['sigla']; ?>
 							</td>
-							<td>
-								<?php
-									echo $this->Html->link(
-										$vereador['Partido']['id'],
-										array(
-											'controller' => 'partidos',
-											'action' => 'view',
-											$vereador['Partido']['id']
-										));
-									
-								?>
+							<td class="text-center">
+								<span class="label label-<?php echo ($vereador['Vereador']['ativo'])? 'success': 'danger'; ?>">
+									<?php echo ($vereador['Vereador']['ativo'])? 'ativado': 'desativado'; ?>
+								</span>
 							</td>
-							<td>
-								<?php echo h($vereador['Vereador']['created']); ?>
-							</td>
-							<td>
-								<?php echo h($vereador['Vereador']['modified']); ?>
-							</td>						
 							<td class="text-center" style="width:90px;">
 								<?php
 									echo $this->Html->link(

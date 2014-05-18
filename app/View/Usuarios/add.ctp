@@ -13,7 +13,7 @@
 			<?php echo $this->Form->create('Usuario'); ?>
 				
 		<div class="form-group">
-			<?php echo $this->Form->input('nome', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
+			<?php echo $this->Form->input('name', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
 		</div>
 		<div class="form-group">
 			<?php echo $this->Form->input('email', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
@@ -26,6 +26,9 @@
 		</div>
 		<div class="form-group">
 			<?php echo $this->Form->input('cargo_id', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
+		</div>
+		<div class="form-group">
+			<?php echo $this->Form->input('secretaria_id', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
 		</div>
 		<div class="form-group">
 			<button type="submit" class="btn btn-primary">

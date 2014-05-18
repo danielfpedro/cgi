@@ -46,29 +46,27 @@
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Name'); ?></th>
 		<th><?php echo __('Uid'); ?></th>
-		<th><?php echo __('Arquivo'); ?></th>
-		<th><?php echo __('Parecer'); ?></th>
+		<th><?php echo __('Introducao'); ?></th>
+		<th><?php echo __('Justificativa'); ?></th>
 		<th><?php echo __('Data Indicacao'); ?></th>
 		<th><?php echo __('Created'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
-		<th><?php echo __('Secretaria Id'); ?></th>
 		<th><?php echo __('Status Indicacao Id'); ?></th>
+		<th><?php echo __('Secretaria Id'); ?></th>
 		<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	<?php foreach ($statusIndicacao['Indicacao'] as $indicacao): ?>
 		<tr>
 			<td><?php echo $indicacao['id']; ?></td>
-			<td><?php echo $indicacao['name']; ?></td>
 			<td><?php echo $indicacao['uid']; ?></td>
-			<td><?php echo $indicacao['arquivo']; ?></td>
-			<td><?php echo $indicacao['parecer']; ?></td>
+			<td><?php echo $indicacao['introducao']; ?></td>
+			<td><?php echo $indicacao['justificativa']; ?></td>
 			<td><?php echo $indicacao['data_indicacao']; ?></td>
 			<td><?php echo $indicacao['created']; ?></td>
 			<td><?php echo $indicacao['modified']; ?></td>
-			<td><?php echo $indicacao['secretaria_id']; ?></td>
 			<td><?php echo $indicacao['status_indicacao_id']; ?></td>
+			<td><?php echo $indicacao['secretaria_id']; ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'indicacoes', 'action' => 'view', $indicacao['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'indicacoes', 'action' => 'edit', $indicacao['id'])); ?>

@@ -11,6 +11,9 @@ class SecretariasController extends AppController {
 	public $layout = 'BootstrapAdmin.default';	
 
 	public function ranking_list() {
+		if (!isset($this->request->query['q'])) {
+			$this->request->query['q'] = '';
+		}
 		$secretarias = $this->Paginator->paginate();
 		// Debugger::dump($vereadores);
 		// exit();
@@ -33,7 +36,14 @@ class SecretariasController extends AppController {
 		if (!isset($this->request->query['q'])) {
 			$this->request->query['q'] = '';
 		}
+		$q_internal = str_replace(' ', '%', $this->request->query['q']);
 		$this->Secretaria->recursive = 0;
+
+		$this->Paginator->settings = array('conditions'=> array(
+			'Secretaria.name LIKE'=> '%'.$q_internal.'%'
+			)
+		);
+
 		$this->set('secretarias', $this->Paginator->paginate());
 	}
 
@@ -61,10 +71,11 @@ class SecretariasController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Secretaria->create();
 			if ($this->Secretaria->save($this->request->data)) {
-				$this->Session->setFlash(__('O <strong>secretaria</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
+				$this->Session->setFlash(__('A <strong>secretaria</strong> foi salva com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('O <strong>secretaria</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				$this->Session->setFlash(__('A <strong>secretaria</strong> não pode ser salva. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				return $this->redirect(array('action' => 'add'));
 			}
 		}
 		$usuarios = $this->Secretaria->Usuario->find('list');
@@ -80,14 +91,14 @@ class SecretariasController extends AppController {
  */
 	public function edit($id = null) {
 		if (!$this->Secretaria->exists($id)) {
-			throw new NotFoundException(__('Invalid secretaria'));
+			throw new NotFoundException(__('Secretaria inválida'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Secretaria->save($this->request->data)) {
-				$this->Session->setFlash(__('The secretaria has been saved.'));
+				$this->Session->setFlash(__('A <strong>secretaria</strong> foi editada com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The secretaria could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('A <strong>secretaria</strong> não pode ser editada. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		} else {
 			$options = array('conditions' => array('Secretaria.' . $this->Secretaria->primaryKey => $id));
@@ -111,9 +122,9 @@ class SecretariasController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Secretaria->delete()) {
-			$this->Session->setFlash(__('O <strong>secretaria</strong> foi deletado com sucesso.'), 'default', array('class'=> 'alert alert-success'));
+			$this->Session->setFlash(__('A <strong>secretaria</strong> foi deletaao com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 		} else {
-			$this->Session->setFlash(__('O <strong>secretaria</strong> não pode ser deletado, por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+			$this->Session->setFlash(__('A <strong>secretaria</strong> não pode ser deletada, por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}}

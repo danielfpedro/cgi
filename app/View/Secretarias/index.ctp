@@ -9,7 +9,7 @@
 		<div class="col-md-12">
 			<?php
 			echo $this->Html->link(
-				"Novo secretaria",
+				"Nova secretaria",
 				array('action'=> 'add'),
 				array('class'=> 'btn btn-success btn-novo',
 					'escape'=> false
@@ -41,23 +41,14 @@
 		<table class="table table-condensed table-hover table-striped table-admin">
 			<thead>
 				<tr>
-					<th>
-						<?php echo $this->Paginator->sort('id'); ?>
+					<th style="width: 60px;">
+						<?php echo $this->Paginator->sort('#'); ?>
 					</th>
 					<th>
-						<?php echo $this->Paginator->sort('name'); ?>
+						<?php echo $this->Paginator->sort('name', 'Nome'); ?>
 					</th>
-					<th>
-						<?php echo $this->Paginator->sort('created'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('modified'); ?>
-					</th>
-					<th>
+					<th style="width: 140px;" class="text-center">
 						<?php echo $this->Paginator->sort('ativo'); ?>
-					</th>
-					<th>
-						<?php echo $this->Paginator->sort('usuario_id'); ?>
 					</th>
 					<th></th>
 				</tr>
@@ -72,27 +63,11 @@
 							<td>
 								<?php echo h($secretaria['Secretaria']['name']); ?>
 							</td>
-							<td>
-								<?php echo h($secretaria['Secretaria']['created']); ?>
+							<td class="text-center">
+								<span class="label label-<?php echo ($secretaria['Secretaria']['ativo'])? 'success': 'danger'; ?>">
+									<?php echo ($secretaria['Secretaria']['ativo'])? 'ativado': 'desativado'; ?>
+								</span>
 							</td>
-							<td>
-								<?php echo h($secretaria['Secretaria']['modified']); ?>
-							</td>
-							<td>
-								<?php echo h($secretaria['Secretaria']['ativo']); ?>
-							</td>
-							<td>
-								<?php
-									echo $this->Html->link(
-										$secretaria['Usuario']['id'],
-										array(
-											'controller' => 'usuarios',
-											'action' => 'view',
-											$secretaria['Usuario']['id']
-										));
-									
-								?>
-							</td>						
 							<td class="text-center" style="width:90px;">
 								<?php
 									echo $this->Html->link(
@@ -125,7 +100,7 @@
 						<tr>					
 					<?php endforeach; ?>
 				<?php else: ?>
-					<td colspan="7">Nenhuma informação encontrada.</td>
+					<td colspan="6">Nenhuma informação encontrada.</td>
 				<?php endif; ?>
 			</tbody>
 		</table>

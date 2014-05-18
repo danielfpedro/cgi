@@ -107,10 +107,10 @@ class ProjetosController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Projeto->save($this->request->data)) {
-				$this->Session->setFlash(__('The projeto has been saved.'));
+				$this->Session->setFlash(__('O <strong>projeto</strong> foi editado com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The projeto could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('O <strong>projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		} else {
 			$options = array('conditions' => array('Projeto.' . $this->Projeto->primaryKey => $id));

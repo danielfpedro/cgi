@@ -7,9 +7,9 @@
 			<?php echo h($partido['Partido']['id']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Nome'); ?></dt>
+		<dt><?php echo __('Name'); ?></dt>
 		<dd>
-			<?php echo h($partido['Partido']['nome']); ?>
+			<?php echo h($partido['Partido']['name']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Sigla'); ?></dt>
@@ -51,7 +51,7 @@
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
 		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Nome'); ?></th>
+		<th><?php echo __('Name'); ?></th>
 		<th><?php echo __('Nome Parlamentar'); ?></th>
 		<th><?php echo __('Ativo'); ?></th>
 		<th><?php echo __('Partido Id'); ?></th>
@@ -62,7 +62,7 @@
 	<?php foreach ($partido['Vereador'] as $vereador): ?>
 		<tr>
 			<td><?php echo $vereador['id']; ?></td>
-			<td><?php echo $vereador['nome']; ?></td>
+			<td><?php echo $vereador['name']; ?></td>
 			<td><?php echo $vereador['nome_parlamentar']; ?></td>
 			<td><?php echo $vereador['ativo']; ?></td>
 			<td><?php echo $vereador['partido_id']; ?></td>

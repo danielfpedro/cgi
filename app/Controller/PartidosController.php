@@ -25,7 +25,15 @@ public $layout = 'BootstrapAdmin.default';
 		if (!isset($this->request->query['q'])) {
 			$this->request->query['q'] = '';
 		}
+		$q_internal = str_replace(' ', '%', $this->request->query['q']);
 		$this->Partido->recursive = 0;
+		$this->Paginator->settings = array('conditions'=> array(
+			'or'=> array(
+				'Partido.name LIKE'=> '%'.$q_internal.'%',
+				'Partido.sigla LIKE'=> '%'.$q_internal.'%',
+				)
+			)
+		);
 		$this->set('partidos', $this->Paginator->paginate());
 	}
 
@@ -57,6 +65,7 @@ public $layout = 'BootstrapAdmin.default';
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('O <strong>partido</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				return $this->redirect(array('action' => 'add'));
 			}
 		}
 	}
@@ -70,14 +79,15 @@ public $layout = 'BootstrapAdmin.default';
  */
 	public function edit($id = null) {
 		if (!$this->Partido->exists($id)) {
-			throw new NotFoundException(__('Invalid partido'));
+			throw new NotFoundException(__('Partido inválido'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Partido->save($this->request->data)) {
-				$this->Session->setFlash(__('The partido has been saved.'));
+				$this->Session->setFlash(__('O <strong>partido</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The partido could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('O <strong>partido</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				return $this->redirect(array('action' => 'edit'));
 			}
 		} else {
 			$options = array('conditions' => array('Partido.' . $this->Partido->primaryKey => $id));

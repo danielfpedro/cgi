@@ -39,7 +39,8 @@ class AppController extends Controller {
 		$this->loadModel('MainMenu');
 		$items_menu = $this->MainMenu->getPrincipal();
 		$items_menu_relatorios = $this->MainMenu->getRelatorios();
-		$this->set(compact('items_menu', 'items_menu_relatorios', 'site_name'));
+		$items_menu_dados_extras = $this->MainMenu->getDadosExtras();
+		$this->set(compact('items_menu', 'items_menu_relatorios', 'site_name', 'items_menu_dados_extras'));
 
 		$this->loadModel('Notificacao');
 		$notificacoes = $this->Notificacao->find('all', array('limit'=> 8));

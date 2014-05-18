@@ -25,7 +25,16 @@ public $layout = 'BootstrapAdmin.default';
 		if (!isset($this->request->query['q'])) {
 			$this->request->query['q'] = '';
 		}
+		
+		$q_internal = str_replace(' ', '%', $this->request->query['q']);
+
 		$this->StatusProjeto->recursive = 0;
+
+		$this->Paginator->settings = array('conditions'=> array(
+			'StatusProjeto.name LIKE'=> '%'.$q_internal.'%'
+			)
+		);
+
 		$this->set('statusProjetos', $this->Paginator->paginate());
 	}
 
@@ -53,10 +62,10 @@ public $layout = 'BootstrapAdmin.default';
 		if ($this->request->is('post')) {
 			$this->StatusProjeto->create();
 			if ($this->StatusProjeto->save($this->request->data)) {
-				$this->Session->setFlash(__('O <strong>status projeto</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
+				$this->Session->setFlash(__('O <strong>status do projeto</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('O <strong>status projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				$this->Session->setFlash(__('O <strong>status do projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		}
 	}
@@ -74,10 +83,10 @@ public $layout = 'BootstrapAdmin.default';
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->StatusProjeto->save($this->request->data)) {
-				$this->Session->setFlash(__('The status projeto has been saved.'));
+				$this->Session->setFlash(__('O <strong>status do projeto</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The status projeto could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('O <strong>status do projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		} else {
 			$options = array('conditions' => array('StatusProjeto.' . $this->StatusProjeto->primaryKey => $id));

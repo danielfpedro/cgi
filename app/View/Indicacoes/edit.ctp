@@ -14,8 +14,10 @@
 <div class="wrap-internal-page">
 	<div class="row">
 		<div class="col-md-12">
-			<?php echo $this->Session->flash(); ?>
-			<?php echo $this->element('Indicacoes/form'); ?>
+			<?php echo $this->Form->create('Indicacao'); ?>
+				<?php echo $this->Form->input('id'); ?>
+				<?php echo $this->element('Indicacoes/form'); ?>
+			<?php echo $this->Form->end(); ?>
 		</div>
 	</div>
 </div>

@@ -7,9 +7,9 @@
 			<?php echo h($usuario['Usuario']['id']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Nome'); ?></dt>
+		<dt><?php echo __('Name'); ?></dt>
 		<dd>
-			<?php echo h($usuario['Usuario']['nome']); ?>
+			<?php echo h($usuario['Usuario']['name']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Email'); ?></dt>
@@ -42,6 +42,11 @@
 			<?php echo h($usuario['Usuario']['modified']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Secretaria'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($usuario['Secretaria']['name'], array('controller' => 'secretarias', 'action' => 'view', $usuario['Secretaria']['id'])); ?>
+			&nbsp;
+		</dd>
 	</dl>
 </div>
 <div class="actions">
@@ -58,43 +63,6 @@
 		<li><?php echo $this->Html->link(__('List Troca Mensagens'), array('controller' => 'troca_mensagens', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Troca Mensagem'), array('controller' => 'troca_mensagens', 'action' => 'add')); ?> </li>
 	</ul>
-</div>
-<div class="related">
-	<h3><?php echo __('Related Secretarias'); ?></h3>
-	<?php if (!empty($usuario['Secretaria'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Name'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
-		<th><?php echo __('Ativo'); ?></th>
-		<th><?php echo __('Usuario Id'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($usuario['Secretaria'] as $secretaria): ?>
-		<tr>
-			<td><?php echo $secretaria['id']; ?></td>
-			<td><?php echo $secretaria['name']; ?></td>
-			<td><?php echo $secretaria['created']; ?></td>
-			<td><?php echo $secretaria['modified']; ?></td>
-			<td><?php echo $secretaria['ativo']; ?></td>
-			<td><?php echo $secretaria['usuario_id']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'secretarias', 'action' => 'view', $secretaria['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'secretarias', 'action' => 'edit', $secretaria['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'secretarias', 'action' => 'delete', $secretaria['id']), null, __('Are you sure you want to delete # %s?', $secretaria['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
-
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Secretaria'), array('controller' => 'secretarias', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
 </div>
 <div class="related">
 	<h3><?php echo __('Related Troca Mensagens'); ?></h3>
