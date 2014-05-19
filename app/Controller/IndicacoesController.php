@@ -13,10 +13,11 @@ class IndicacoesController extends AppController {
 
 	public function getIndicacoesAutoComplete(){
 		$options = array();
-		if (!is_null($this->request->query['term'])) {
+		if (!empty($this->request->query['term'])) {
 			$q = str_replace(' ', '%', $this->request->query['term']);
-			$options['conditions'] = array('Indicacao.uid LIKE'=> '%'.$q.'%');
+			$options['conditions'][] = array('Indicacao.uid LIKE'=> '%'.$q.'%');
 		}
+		$options['conditions'][] = array('Indicacao.secretaria_id !='=> NULL);
 		// Debugger::dump($options);
 		$options['limit'] = 10;
 		$query = $this->Indicacao->find('all', $options);

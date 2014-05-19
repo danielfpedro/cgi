@@ -102,7 +102,7 @@
 									echo $this->Html->link(
 										$this->Text->truncate(
 											$indicacao['Indicacao']['introducao'],
-											190,
+											120,
 											array('exact'=> false)
 										),
 										array(

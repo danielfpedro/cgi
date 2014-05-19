@@ -63,13 +63,13 @@ class MainMenu extends AppModel {
 				'url'=> array('controller'=> 'statusProjetos', 'action'=> 'index'),
 			),
 			array(
-				'label'=> 'Usuarios',
-				'url'=> array('controller'=> 'usuarios', 'action'=> 'index'),
-			),
-			array(
 				'label'=> 'Bairros',
 				'url'=> array('controller'=> 'bairros', 'action'=> 'index'),
-			)
+			),
+			array(
+				'label'=> 'Usuários',
+				'url'=> array('controller'=> 'usuarios', 'action'=> 'index'),
+			),
 		);
 
 		return $items_menu;
