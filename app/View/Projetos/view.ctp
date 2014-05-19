@@ -3,20 +3,18 @@
 		<?php echo $this->Html->link('Projetos', array('action'=> 'index')) ?>
 	</li>
 	<li class="active">
-		Projeto
+		Projeto "<?php echo $projeto['Projeto']['titulo']; ?>"
 	</li>
 </div>
 
-<div class="row" style="margin-top: 40px;">
+<div class="row" style="margin-top: 60px;">
 	<div class="col-md-12">
-		<h3>
-			<?php echo $projeto['Projeto']['titulo']; ?>
-		</h3>
-		<hr>
-		<p>
-			<?php echo $projeto['Projeto']['descricao']; ?>
-		</p>
-		<br>
+		<dl>
+			<dt>Descrição</dt>	
+			<dd>
+				<?php echo $projeto['Projeto']['descricao']; ?>
+			</dd>
+		</dl>
 		<dl>
 			<dt>Localidade</dt>	
 			<dd>
@@ -29,8 +27,10 @@
 				<h4>R$ <?php echo number_format($projeto['Projeto']['valor'], 2, ',', '.'); ?></h4>
 			</dd>
 		</dl>
-		<p>
-			Este projeto partiu da indicação 
+		<em class="text-muted">
+			Projeto criado em 
+			<strong><?php echo $this->Time->format('d F Y', $projeto['Projeto']['created']); ?></strong>
+			em resposta a indicação 
 				<?php 
 					echo $this->Html->link(
 						$projeto['Indicacao']['uid'],
@@ -38,9 +38,12 @@
 							'controller' => 'indicacoes',
 							'action' => 'view',
 							$projeto['Indicacao']['id']
-						)
+						),
+						array(
+							'target'=> '_blank',
+							)
 					);
 				?>.
-		</p>
+		</em>
 	</div>
 </div>

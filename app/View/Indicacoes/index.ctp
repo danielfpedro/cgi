@@ -10,7 +10,6 @@
 </ul>
 
 <div class="wrap-internal-page">
-	<?php echo $this->Session->flash(); ?>
 	<div class="row">
 		<div class="col-md-12">
 			<?php
@@ -36,6 +35,31 @@
 						placeholder="Pesquisar"
 						name="q"
 						value="<?php echo $this->request->query['q']; ?>">
+
+					<select class="form-control" name="status">
+						<option value="">Status</option>
+						<?php foreach ($status as $key=> $item): ?>
+							<option
+								value="<?php echo $key; ?>"
+								<?php echo ($key == $this->request->query['status'])? 'selected' : ''; ?>>
+
+								<?php echo $item; ?>
+							</option>
+						<?php endforeach ?>
+					</select>
+
+					<select class="form-control" name="secretaria">
+						<option value="">Secretarias</option>
+						<?php foreach ($secretarias as $key=> $secretaria): ?>
+							<option
+								value="<?php echo $key; ?>"
+								<?php echo ($key == $this->request->query['secretaria'])? 'selected' : ''; ?>>
+
+								<?php echo $secretaria; ?>
+							</option>
+						<?php endforeach ?>
+					</select>
+
 					<button class="btn btn-default hidden-xs">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
@@ -63,7 +87,7 @@
 					<th style="width: 80px;">
 						<?php echo $this->Paginator->sort('data_indicacao', 'Data'); ?>
 					</th>
-					<th style="width: 140px;"></th>
+					<th style="width: 180px;"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -153,6 +177,20 @@
 							</td>						
 							<td class="text-center">
 								<?php
+									echo $this->Html->link(
+										"<span class='glyphicon glyphicon-asterisk'></span>",
+										array(
+											'controller'=> 'indicacoes',
+											'action' => 'setParecerModal',
+											$indicacao['Indicacao']['id']),
+										array(
+											'id'=> 'open-modal',
+											'class'=> 'btn btn-sm btn-primary tt',
+											'title'=> 'Parecer',
+											'escape'=> false
+										)
+									);
+									echo "&nbsp;";
 									echo $this->Html->link(
 										"<span class='glyphicon glyphicon-envelope'></span>",
 										array(

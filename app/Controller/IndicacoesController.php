@@ -9,7 +9,7 @@ App::import( 'Helper', 'Time');
  */
 class IndicacoesController extends AppController {
 
-public $layout = 'BootstrapAdmin.default';	
+	public $layout = 'BootstrapAdmin.default';	
 
 	public function getIndicacoesAutoComplete(){
 		$options = array();
@@ -72,7 +72,26 @@ public $layout = 'BootstrapAdmin.default';
 			}
 			$this->set(compact('indicacao', 'secretarias'));
 		} else {
-			$this->Session->setFlash('A secretária que você tentou setar não foi encontrada.', 'default', array('class'=> 'alert alert-danger'));
+			$this->Session->setFlash('A indicação que você tentou setar não foi encontrada.', 'default', array('class'=> 'alert alert-danger'));
+			$this->redirect(array('controller'=> 'indicacoes', 'action'=> 'index'));
+		}
+		$this->layout = 'ajax';
+	}
+
+	public function setParecerModal($id = null) {
+		$indicacao = $this->Indicacao->find('first', array('conditions'=> array('Indicacao.id'=> $id)));
+		if (!empty($indicacao)) {
+			if ($this->request->is(array('post', 'put'))) {
+				if (!$this->Indicacao->save($this->request->data)) {
+					$this->Session->setFlash('Ocorreu um erro ao salvar a secretária', 'default', array('class'=> 'alert alert-danger'));
+				}
+				$this->redirect(array('controller'=> 'indicacoes', 'action'=> 'index'));
+			} else {
+				$this->request->data = $indicacao;
+			}
+			$this->set(compact('indicacao'));
+		} else {
+			$this->Session->setFlash('A indicação que você tentou setar o parecer não foi encontrada.', 'default', array('class'=> 'alert alert-danger'));
 			$this->redirect(array('controller'=> 'indicacoes', 'action'=> 'index'));
 		}
 		$this->layout = 'ajax';
@@ -91,13 +110,51 @@ public $layout = 'BootstrapAdmin.default';
  * @return void
  */
 	public function index() {
-		if (!isset($this->request->query['q'])) {
+		$options = array();
+
+		if (!empty($this->request->query['q'])) {
+			$q = $this->request->query['q'];
+			$options['conditions'][] = array('Indicacao.uid LIKE'=> '%'.$q.'%');
+		} else {
 			$this->request->query['q'] = '';
 		}
-		$q = str_replace(' ', '%', $this->request->query['q']);
-		$this->Indicacao->recursive = 2;
-		$this->Paginator->settings = array('Indicacao'=> array('conditions'=> array('Indicacao.uid LIKE' => '%'.$q.'%'), 'order'=> 'Indicacao.created DESC'));
+
+		// Filtro status
+		if (!empty($this->request->query['status'])) {
+			$status = $this->request->query['status'];
+			$options['conditions'][] = array(
+				'Indicacao.status_indicacao_id'=> $status);
+		} else {
+			$this->request->query['status'] = '';
+		}
+
+		// Filtro secretaria
+		if (!empty($this->request->query['secretaria'])) {
+			$secretaria = $this->request->query['secretaria'];
+			$options['conditions'][] = array(
+				'Indicacao.secretaria_id'=> $secretaria);
+		} else {
+			$this->request->query['secretaria'] = '';
+		}
+
+		$options['order'] = 'Indicacao.created DESC';
+		
+		$options['contain'] = array(
+			'Secretaria',
+			'StatusIndicacao',
+			'Vereador'=> array(
+				'Partido'
+				));
+
+		$this->Indicacao->recursive = -1;
+		$this->Paginator->settings = array('Indicacao'=> $options);
 		$this->set('indicacoes', $this->Paginator->paginate());
+
+		$secretarias = $this->Indicacao->Secretaria->find('list');
+		$vereadores = $this->Indicacao->Vereador->find('list');
+		$status = $this->Indicacao->StatusIndicacao->find('list');
+
+		$this->set(compact('status', 'secretarias'));
 	}
 
 /**
@@ -110,6 +167,18 @@ public $layout = 'BootstrapAdmin.default';
 	public function view($id = null) {
 		if (!$this->Indicacao->exists($id)) {
 			throw new NotFoundException(__('Invalid indicacao'));
+		}
+		$this->Indicacao->recursive = 3;
+		$options = array('conditions' => array('Indicacao.' . $this->Indicacao->primaryKey => $id));
+		$this->set('indicacao', $this->Indicacao->find('first', $options));
+	}
+
+	public function view_print($id = null) {
+		
+		$this->layout = 'BootstrapAdmin.print';
+
+		if (!$this->Indicacao->exists($id)) {
+			throw new NotFoundException(__('IIndicação não encontrada'));
 		}
 		$this->Indicacao->recursive = 3;
 		$options = array('conditions' => array('Indicacao.' . $this->Indicacao->primaryKey => $id));

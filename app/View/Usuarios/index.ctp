@@ -1,6 +1,6 @@
 <div class="breadcrumb breadcrumb-admin">
 	<li class="active">
-		Usuários
+		Usuarios
 	</li>
 </div>
 
@@ -9,7 +9,7 @@
 		<div class="col-md-12">
 			<?php
 			echo $this->Html->link(
-				"Novo usuário",
+				"Novo usuario",
 				array('action'=> 'add'),
 				array('class'=> 'btn btn-success btn-novo',
 					'escape'=> false
@@ -41,23 +41,32 @@
 		<table class="table table-condensed table-hover table-striped table-admin">
 			<thead>
 				<tr>
-					<th style="width: 60px;">
-						<?php echo $this->Paginator->sort('#'); ?>
+					<th>
+						<?php echo $this->Paginator->sort('id'); ?>
 					</th>
 					<th>
-						<?php echo $this->Paginator->sort('name',' Nome'); ?>
+						<?php echo $this->Paginator->sort('name'); ?>
 					</th>
-					<th style="width: 200px;">
+					<th>
 						<?php echo $this->Paginator->sort('email'); ?>
 					</th>
-					<th style="width: 140px;">
+					<th>
+						<?php echo $this->Paginator->sort('senha'); ?>
+					</th>
+					<th>
+						<?php echo $this->Paginator->sort('ativo'); ?>
+					</th>
+					<th>
 						<?php echo $this->Paginator->sort('cargo_id'); ?>
 					</th>
-					<th style="width: 180px;">
-						<?php echo $this->Paginator->sort('secretaria_id'); ?>
+					<th>
+						<?php echo $this->Paginator->sort('created'); ?>
 					</th>
-					<th style="width: 140px;" class="text-center">
-						<?php echo $this->Paginator->sort('ativo'); ?>
+					<th>
+						<?php echo $this->Paginator->sort('modified'); ?>
+					</th>
+					<th>
+						<?php echo $this->Paginator->sort('secretaria_id'); ?>
 					</th>
 					<th></th>
 				</tr>
@@ -76,16 +85,41 @@
 								<?php echo h($usuario['Usuario']['email']); ?>
 							</td>
 							<td>
-								<?php echo $usuario['Cargo']['name'] ?>
+								<?php echo h($usuario['Usuario']['senha']); ?>
 							</td>
 							<td>
-								<?php echo $usuario['Secretaria']['name'] ?>
+								<?php echo h($usuario['Usuario']['ativo']); ?>
 							</td>
-							<td class="text-center">
-								<span class="label label-<?php echo ($usuario['Usuario']['ativo'])? 'success': 'danger'; ?>">
-									<?php echo ($usuario['Usuario']['ativo'])? 'ativado': 'desativado'; ?>
-								</span>
+							<td>
+								<?php
+									echo $this->Html->link(
+										$usuario['Cargo']['name'],
+										array(
+											'controller' => 'cargos',
+											'action' => 'view',
+											$usuario['Cargo']['id']
+										));
+									
+								?>
 							</td>
+							<td>
+								<?php echo h($usuario['Usuario']['created']); ?>
+							</td>
+							<td>
+								<?php echo h($usuario['Usuario']['modified']); ?>
+							</td>
+							<td>
+								<?php
+									echo $this->Html->link(
+										$usuario['Secretaria']['name'],
+										array(
+											'controller' => 'secretarias',
+											'action' => 'view',
+											$usuario['Secretaria']['id']
+										));
+									
+								?>
+							</td>						
 							<td class="text-center" style="width:90px;">
 								<?php
 									echo $this->Html->link(

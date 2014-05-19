@@ -10,7 +10,7 @@
 </div>
 
 <div class="wrap-internal-page">
-	<?php echo $this->Session->flash(); ?>	<div class="row">
+	<div class="row">
 		<div class="col-md-12">
 			<?php
 			echo $this->Html->link(
@@ -34,6 +34,30 @@
 						placeholder="Pesquisar"
 						name="q"
 						value="<?php echo $this->request->query['q']; ?>">
+
+					<select class="form-control" name="status">
+						<option value="">Status</option>
+						<?php foreach ($status as $key=> $item): ?>
+							<option
+								value="<?php echo $key; ?>"
+								<?php echo ($item == $this->request->query['status'])? 'selected' : ''; ?>>
+
+								<?php echo $item; ?>
+							</option>
+						<?php endforeach ?>
+					</select>
+
+					<select class="form-control" name="secretaria">
+						<option value="">Secretarias</option>
+						<?php foreach ($secretarias as $key=> $secretaria): ?>
+							<option
+								value="<?php echo $key; ?>"
+								<?php echo ($secretaria == $this->request->query['secretaria'])? 'selected' : ''; ?>>>
+
+								<?php echo $secretaria; ?>
+							</option>
+						<?php endforeach ?>
+					</select>
 					<button class="btn btn-default hidden-xs">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
@@ -47,7 +71,7 @@
 			<thead>
 				<tr>
 					<th style="width: 80px;">
-						<?php echo $this->Paginator->sort('id', '#'); ?>
+						<?php echo $this->Paginator->sort('uid', '#'); ?>
 					</th>
 					<th>
 						<?php echo $this->Paginator->sort('titulo', 'Projeto'); ?>
@@ -61,7 +85,7 @@
 						?>
 					</th>
 					<th style="width: 80px;">
-						<?php echo $this->Paginator->sort('data_projeto', 'Data'); ?>
+						<?php echo $this->Paginator->sort('created', 'Data'); ?>
 					</th>	
 					<th style="width: 100px;"></th>
 				</tr>
@@ -71,7 +95,7 @@
 					<?php foreach ($projetos as $projeto): ?>						
 						<tr>
 							<td>
-								<?php echo $projeto['Projeto']['id']; ?>
+								<?php echo $projeto['Projeto']['uid']; ?>
 							</td>
 							<td>
 								<?php
@@ -121,10 +145,14 @@
 								</div>
 							</td>
 							<td>
-								<?php echo $projeto['Indicacao']['Secretaria']['name']; ?>
+								<?php if (!empty($projeto['Indicacao']['Secretaria']['name'])): ?>
+									<?php echo $projeto['Indicacao']['Secretaria']['name'] ?>
+								<?php else: ?>
+									<em class="text-muted">Nenhuma secretaria atribuída.</em>
+								<?php endif ?>
 							</td>
 							<td>
-								<?php echo $this->Time->format('d/m/y', $projeto['Projeto']['data_projeto']); ?>
+								<?php echo $this->Time->format('d/m/y', $projeto['Projeto']['created']); ?>
 							</td>	
 							<td class="text-center" style="width:90px;">
 								<?php

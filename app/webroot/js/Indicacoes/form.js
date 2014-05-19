@@ -1,6 +1,6 @@
 $(function(){
-	$('#IndicacaoDataIndicacao').mask('99/90/9999');
 
+	$('#IndicacaoDataIndicacao').mask('99/90/9999');
 
 	//$('#tag-autores').tagsManager();
 });

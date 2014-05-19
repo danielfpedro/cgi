@@ -47,11 +47,52 @@ class ProjetosController extends AppController {
  * @return void
  */
 	public function index() {
-		if (!isset($this->request->query['q'])) {
+		
+		$options = array();
+
+		if (!empty($this->request->query['q'])) {
+			$q = str_replace(' ', '%', $this->request->query['q']);
+
+			$options['conditions'] = array(
+				'or'=> array(
+					'Projeto.titulo LIKE'=> '%'.$q.'%',
+					'Projeto.uid LIKE'=> '%'.$q.'%'
+					)
+				);
+		} else {
 			$this->request->query['q'] = '';
 		}
+		if (!empty($this->request->query['status'])) {
+			
+			$status = $this->request->query['status'];
+
+			$options['conditions'] = array(
+				'Projeto.status_projeto_id'=> $status
+				);
+		} else {
+			$this->request->query['status'] = '';
+		}
+
+		if (!empty($this->request->query['secretaria'])) {
+			
+			// $secretaria = $this->request->query['secretaria'];
+
+			// $options['conditions'] = array(
+			// 	'Projeto.secretaria_id'=> $secretaria
+			// 	);
+		}else {
+			$this->request->query['secretaria'] = '';
+		}
+
 		$this->Projeto->recursive = 2;
+
+		$this->Paginator->settings = $options;
 		$this->set('projetos', $this->Paginator->paginate());
+
+		$secretarias = $this->Projeto->Indicacao->Secretaria->find('list');
+		$status = $this->Projeto->StatusProjeto->find('list');
+
+		$this->set(compact('secretarias', 'status'));
 	}
 
 /**
@@ -76,10 +117,14 @@ class ProjetosController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-
 			// $this->Projeto->recursive = -1;
 			// $this->Projeto->contain = array('Indicacao'=> array('Usuario'));
 			$this->request->data['Projeto']['status_projeto_id'] = 1;
+			
+			//Arruma formatação monetário
+			$this->request->data['Projeto']['valor'] = str_replace('.', '', $this->request->data['Projeto']['valor']);
+			$this->request->data['Projeto']['valor'] = str_replace(',', '.', $this->request->data['Projeto']['valor']);
+
 			$this->Projeto->create();
 			if ($this->Projeto->save($this->request->data)) {
 				$this->Session->setFlash(__('O <strong>projeto</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
@@ -88,10 +133,10 @@ class ProjetosController extends AppController {
 				$this->Session->setFlash(__('O <strong>projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		}
-		$statusProjetos = $this->Projeto->StatusProjeto->find('list');
+
 		$bairros = $this->Projeto->Bairro->find('list');
-		$indicacoes = $this->Projeto->Indicacao->find('list');
-		$this->set(compact('statusProjetos', 'bairros', 'indicacoes'));
+
+		$this->set(compact('bairros', 'indicacoes'));
 	}
 
 /**
@@ -115,11 +160,20 @@ class ProjetosController extends AppController {
 		} else {
 			$options = array('conditions' => array('Projeto.' . $this->Projeto->primaryKey => $id));
 			$this->request->data = $this->Projeto->find('first', $options);
+
+			//Formato monetário
+			$this->request->data['Projeto']['valor'] = number_format($this->request->data['Projeto']['valor'], 2, ',', '.');
 		}
 		$statusProjetos = $this->Projeto->StatusProjeto->find('list');
 		$bairros = $this->Projeto->Bairro->find('list');
-		$indicacoes = $this->Projeto->Indicacao->find('list');
-		$this->set(compact('statusProjetos', 'bairros', 'indicacoes'));
+
+		//Pega a UID da indicação para mostrar na tag
+		$indicacao_uid = $this->Projeto->Indicacao->find(
+			'first',
+			array('conditions'=> array('Indicacao.id'=> $this->request->data['Projeto']['indicacao_id'])));
+		$indicacao_uid = $indicacao_uid['Indicacao']['uid'];
+
+		$this->set(compact('statusProjetos', 'bairros', 'indicacao_uid'));
 	}
 
 /**
