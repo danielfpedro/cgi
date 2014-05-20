@@ -11,9 +11,19 @@ class VereadoresController extends AppController {
 	public $layout = 'BootstrapAdmin.default';	
 
 	public function ranking_list() {
-		if (!isset($this->request->query['q'])) {
+		$options = array();
+		if (!empty($this->request->query['q'])) {
+			$q = str_replace(' ', '%', $this->request->query['q']);
+
+			$options['conditions'][] = array(
+				'or'=> array(
+					'Vereador.name LIKE'=> '%'.$q.'%',
+					'Vereador.nome_parlamentar LIKE'=> '%'.$q.'%',
+					));
+		} else {
 			$this->request->query['q'] = '';
 		}
+		$this->Paginator->settings = $options;
 		$vereadores = $this->Paginator->paginate();
 		// Debugger::dump($vereadores);
 		// exit();

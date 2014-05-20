@@ -11,6 +11,39 @@ class UsuariosController extends AppController {
 
 	public $layout = 'BootstrapAdmin.default';	
 
+	public function login() {
+		$this->layout = 'BootstrapAdmin.login';
+	}
+
+	public function meu_usuario() {
+		$id = 9;
+		if (!$this->Usuario->exists($id)) {
+			throw new NotFoundException(__('Usuário inválido'));
+		}
+		if ($this->request->is(array('post', 'put'))) {
+
+			//FAZ O HASH DO PASSWORD
+			if (!empty($this->request->data['Usuario']['fake_password'])) {
+				$passwordHasher = new SimplePasswordHasher(array('hashType' => 'sha256'));
+				$this->request->data['Usuario']['senha'] = $passwordHasher->hash(
+					$this->request->data['Usuario']['fake_password']
+				);
+			}
+
+			$this->request->data['Usuario']['id'] = $id;
+			if ($this->Usuario->save($this->request->data)) {
+				$this->Session->setFlash(__('O <strong>usuario</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
+			} else {
+				$this->Session->setFlash(__('O <strong>usuario</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+			}
+		} else {
+			$options = array('conditions' => array('Usuario.' . $this->Usuario->primaryKey => $id));
+			$this->request->data = $this->Usuario->find('first', $options);
+		}
+
+		$this->request->data['Usuario']['fake_password'] = '';
+	}
+
 /**
  * Components
  *

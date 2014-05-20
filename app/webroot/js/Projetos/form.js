@@ -41,7 +41,6 @@ $(function(){
 		$('#ProjetoMapaZoom').val(map.getZoom());
 	});
 
-	alert(zoom_default);
 	map.setZoom(zoom_default);
 
 	// GEOCOMPLETE

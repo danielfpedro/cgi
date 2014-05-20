@@ -15,7 +15,7 @@
 <?php  echo $this->Html->script('Projetos/form', array('inline'=> false));?>
 
 
-<?php echo $this->Form->input('indicacao_id', array('type'=> 'text','class'=> 'form-control')); ?>
+<?php echo $this->Form->input('indicacao_id', array('type'=> 'hidden','class'=> 'form-control')); ?>
 <input type="hidden" value="<?php echo isset($indicacao_uid)? $indicacao_uid : ''; ?>" id="ProjetoIndicacaoUid">
 
 <div class="form-group">
@@ -61,10 +61,10 @@
 	<?php echo $this->Form->input('endereco', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
 </div>
 <div class="form-group">
-	<?php echo $this->Form->input('mapa_zoom', array('type'=> 'text','class'=> 'form-control')); ?>
+	<?php echo $this->Form->input('mapa_zoom', array('type'=> 'hidden','class'=> 'form-control')); ?>
 </div>
 <div class="form-group">
-	<?php echo $this->Form->input('mapa_latlng', array('type'=> 'text','class'=> 'form-control')); ?>
+	<?php echo $this->Form->input('mapa_latlng', array('type'=> 'hidden','class'=> 'form-control')); ?>
 </div>
 
 <!-- GEOCOMPLETE -->
