@@ -32,8 +32,8 @@ class StatusProjetoFixture extends CakeTestFixture {
 			'id' => 1,
 			'name' => 'Lorem ipsum dolor sit amet',
 			'ativo' => 1,
-			'created' => '2014-05-12 05:40:56',
-			'modified' => '2014-05-12 05:40:56'
+			'created' => '2014-05-21 00:38:56',
+			'modified' => '2014-05-21 00:38:56'
 		),
 	);
 

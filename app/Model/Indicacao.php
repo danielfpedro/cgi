@@ -11,8 +11,6 @@ App::uses('AppModel', 'Model');
  */
 class Indicacao extends AppModel {
 
-	public $actsAs = array('Containable');
-
 /**
  * Validation rules
  *

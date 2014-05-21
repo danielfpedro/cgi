@@ -12,16 +12,18 @@ class IndicacaoFixture extends CakeTestFixture {
  */
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'uid' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 40, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'uid' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 40, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'introducao' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'justificativa' => array('type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'data_indicacao' => array('type' => 'date', 'null' => false, 'default' => null),
+		'parecer' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'status_indicacao_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
 		'secretaria_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'key' => 'index'),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+			'uid_UNIQUE' => array('column' => 'uid', 'unique' => 1),
 			'fk_indicacoes_status_indicacoes1_idx' => array('column' => 'status_indicacao_id', 'unique' => 0),
 			'fk_indicacoes_secretarias1_idx' => array('column' => 'secretaria_id', 'unique' => 0)
 		),
@@ -39,9 +41,10 @@ class IndicacaoFixture extends CakeTestFixture {
 			'uid' => 'Lorem ipsum dolor sit amet',
 			'introducao' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 			'justificativa' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-			'data_indicacao' => '2014-05-12',
-			'created' => '2014-05-12 05:40:54',
-			'modified' => '2014-05-12 05:40:54',
+			'data_indicacao' => '2014-05-21',
+			'parecer' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			'created' => '2014-05-21 00:38:54',
+			'modified' => '2014-05-21 00:38:54',
 			'status_indicacao_id' => 1,
 			'secretaria_id' => 1
 		),

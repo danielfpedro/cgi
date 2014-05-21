@@ -49,6 +49,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="container-flash">
 		<?php echo $this->Session->flash(); ?>	
 	</div>

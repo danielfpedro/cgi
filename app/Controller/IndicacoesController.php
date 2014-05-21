@@ -14,8 +14,19 @@ class IndicacoesController extends AppController {
 	public function getIndicacoesAutoComplete(){
 		$options = array();
 		if (!empty($this->request->query['term'])) {
+
+			// Seleciona os projetos que tem ID
+			$query = $this->Indicacao->Projeto->find('all', array('fields'=> array('Projeto.indicacao_id')));
+			$excluir_indicacoes = array();
+			foreach ($query as $item) {
+				$excluir_indicacoes[] = $item['Projeto']['indicacao_id'];
+			}
+
 			$q = str_replace(' ', '%', $this->request->query['term']);
-			$options['conditions'][] = array('Indicacao.uid LIKE'=> '%'.$q.'%');
+			$options['conditions'][] = array(
+				'Indicacao.uid LIKE'=> '%'.$q.'%',
+				'Indicacao.id !='=> $excluir_indicacoes
+				);
 		}
 		$options['conditions'][] = array('Indicacao.secretaria_id !='=> NULL);
 		// Debugger::dump($options);
@@ -147,9 +158,14 @@ class IndicacoesController extends AppController {
 				'Partido'
 				));
 
-		$this->Indicacao->recursive = -1;
+		$this->Indicacao->recursive = 2;
 		$this->Paginator->settings = array('Indicacao'=> $options);
-		$this->set('indicacoes', $this->Paginator->paginate());
+
+		$indicacoes = $this->Paginator->paginate();
+		$this->set(compact('indicacoes'));
+
+		// Debugger::dump($indicacoes);
+		// exit();
 
 		$secretarias = $this->Indicacao->Secretaria->find('list');
 		$vereadores = $this->Indicacao->Vereador->find('list');

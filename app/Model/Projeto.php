@@ -15,16 +15,6 @@ class Projeto extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'uid' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		'titulo' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
@@ -58,16 +48,6 @@ class Projeto extends AppModel {
 		'mapa_latlng' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'data_projeto' => array(
-			'date' => array(
-				'rule' => array('date'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,

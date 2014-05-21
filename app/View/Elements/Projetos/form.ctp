@@ -1,10 +1,10 @@
 <?php 
-	echo $this->Html->script(
-		'http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places',
-		array('inline'=> false)
-	);
+	// echo $this->Html->script(
+	// 	'http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places',
+	// 	array('inline'=> false)
+	// );
 
-	echo $this->Html->script('../lib/geocomplete/jquery.geocomplete.min', array('inline'=> false));
+	//echo $this->Html->script('../lib/geocomplete/jquery.geocomplete.min', array('inline'=> false));
 ?>
 
 <?php  echo $this->Html->css('../lib/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.min', array('inline'=> false));?>
@@ -40,9 +40,6 @@
 	<div id="wrap-tag">Indicação: <em id="tag" class="text-muted">Indicação não adicionada</em></div>
 </div>
 
-<div class="form-group">
-	<?php echo $this->Form->input('uid', array('class'=> 'form-control')); ?>
-</div>
 <div class="form-group">
 	<?php echo $this->Form->input('titulo', array('class'=> 'form-control')); ?>
 </div>

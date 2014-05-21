@@ -53,12 +53,7 @@ class ProjetosController extends AppController {
 		if (!empty($this->request->query['q'])) {
 			$q = str_replace(' ', '%', $this->request->query['q']);
 
-			$options['conditions'] = array(
-				'or'=> array(
-					'Projeto.titulo LIKE'=> '%'.$q.'%',
-					'Projeto.uid LIKE'=> '%'.$q.'%'
-					)
-				);
+			$options['conditions'] = array('Projeto.titulo LIKE'=> '%'.$q.'%');
 		} else {
 			$this->request->query['q'] = '';
 		}

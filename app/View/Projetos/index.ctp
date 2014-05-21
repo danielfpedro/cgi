@@ -71,7 +71,7 @@
 			<thead>
 				<tr>
 					<th style="width: 80px;">
-						<?php echo $this->Paginator->sort('uid', '#'); ?>
+						<?php echo $this->Paginator->sort('id', '#'); ?>
 					</th>
 					<th>
 						<?php echo $this->Paginator->sort('titulo', 'Projeto'); ?>
@@ -95,7 +95,7 @@
 					<?php foreach ($projetos as $projeto): ?>						
 						<tr>
 							<td>
-								<?php echo $projeto['Projeto']['uid']; ?>
+								<?php echo $projeto['Projeto']['id']; ?>
 							</td>
 							<td>
 								<?php

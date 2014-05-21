@@ -127,9 +127,10 @@ html, body {
 
 .container-flash{
 	position: fixed;
-	bottom: 0;
-	left: 0;
-	margin-left: 0;
+	top: 0;
+	left: 50%;
+	margin-top: 20px;
+	margin-left: -300px;
 	width: 600px;
 	z-index: 20000;
 }

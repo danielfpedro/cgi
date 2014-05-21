@@ -38,7 +38,7 @@ class TrocaMensagemFixture extends CakeTestFixture {
 			'usuario_id' => 1,
 			'destinatario' => 1,
 			'indicacao_id' => 1,
-			'created' => '2014-05-12 05:40:56'
+			'created' => '2014-05-21 00:38:56'
 		),
 	);
 

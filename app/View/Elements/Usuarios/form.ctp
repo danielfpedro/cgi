@@ -2,7 +2,7 @@
 	<?php echo $this->Form->input('id', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
 </div>
 <div class="form-group">
-	<?php echo $this->Form->input('name', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
+	<?php echo $this->Form->input('name', array('label'=> 'Nome','class'=> 'form-control')); ?>
 </div>
 <div class="form-group">
 	<?php echo $this->Form->input('email', array('empty'=> 'Selecione:','class'=> 'form-control')); ?>
