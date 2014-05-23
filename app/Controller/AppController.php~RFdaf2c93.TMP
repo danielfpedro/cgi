@@ -62,8 +62,6 @@ class AppController extends Controller {
 	public $Auth_cargo = null;
 
 	public function beforeFilter() {
-		//Auth gambi
-		$this->customAuth();
 
 		$site_name = 'SGI';
 
@@ -73,46 +71,13 @@ class AppController extends Controller {
 		$items_menu_dados_extras = $this->MainMenu->getDadosExtras();
 		$this->set(compact('items_menu', 'items_menu_relatorios', 'site_name', 'items_menu_dados_extras'));
 
-		if ($this->Auth) {
-			$this->loadModel('Notificacao');
-			$notificacoes = $this->Notificacao->find(
-				'all',
-				array(
-					'order'=> 'Notificacao.created DESC',
-					'limit'=> 10,
-					'conditions'=> array(
-						'or'=> array(
-							array('Notificacao.usuario_id'=> Null),
-							array('Notificacao.usuario_id'=> $this->Auth_usuario_id),
-							)
-							)));
+		$this->loadModel('Notificacao');
+		$notificacoes = $this->Notificacao->find('all', array('limit'=> 8));
+		$this->set(compact('notificacoes'));
 
-			$total_notificacoes_novas = 0;
-			$this->loadModel('NotificacoesLida');
-			$last_view = $this->NotificacoesLida->find('first', array(
-				'order'=> 'last_view DESC',
-				'conditions'=> array(
-					'NotificacoesLida.usuario_id'=> $this->Auth_usuario_id
-				)));
-			if (!empty($last_view)) {
-				$last_view = $last_view['NotificacoesLida']['last_view'];
-				// Debugger::dump($last_view);
-				// exit();
-			} else {
-				$last_view = '0000-00-00 00:00:00';
-			}
-			$total_notificacoes_novas = $this->Notificacao->find('count', array(
-					'conditions'=> array(
-						'or'=> array(
-							array('Notificacao.usuario_id'=> Null),
-							array('Notificacao.usuario_id'=> $this->Auth_usuario_id),array()
-							),
-						'Notificacao.created >'=> $last_view)));
-			
+		//Auth gambi
+		$this->customAuth();
 
-			$this->set(compact('notificacoes', 'total_notificacoes_novas'));
-			# code...
-		}
 	}
 
 	public function customAuth() {
@@ -122,54 +87,17 @@ class AppController extends Controller {
 			$this->Auth_usuario_id = $this->Session->read('Auth.usuario_id');
 			$this->Auth_nome = $this->Session->read('Auth.nome');
 			$this->Auth_email = $this->Session->read('Auth.email');
-			$this->Auth_cargo_id = $this->Session->read('Auth.cargo_id');
 			$this->Auth_cargo = $this->Session->read('Auth.cargo');
-			$this->Auth_secretaria_id = $this->Session->read('Auth.secretaria_id');
-			$this->Auth_secretaria = $this->Session->read('Auth.secretaria');
 
-			$this->set('Auth_usuario_id', $this->Auth_usuario_id);
-			$this->set('Auth_nome', $this->Auth_nome);
-			$this->set('Auth_email', $this->Auth_email);
-			$this->set('Auth_cargo_id', $this->Auth_cargo_id);
-			$this->set('Auth_cargo', $this->Auth_cargo);
-			$this->set('Auth_secretaria_id', $this->Auth_secretaria_id);
-			$this->set('Auth_secretaria', $this->Auth_secretaria);
+			$this->set('usuario_id', $Auth->usuario_id);
+			$this->set('usuario_id', $Auth->nome);
+			$this->set('email', $Auth->email);
+			$this->set('cargo', $Auth->cargo);
+			$this->set('usuario_id', $Auth->usuario_id);
 
 			if ($this->params['controller'] == 'usuarios' AND $this->params['action'] == 'login') {
 				return $this->redirect(array('controller'=> 'indicacoes', 'action'=> 'index'));
 			}
-
-			// Controle de acesso dos controllers
-			$black_list_a = array(
-				'partidos',
-				'vereadores',
-				'vereadores',
-				'secretarias',
-				'statusIndicacoes', 'statusProjetos', 'bairros', 'usuarios');
-
-			$white_list_actions = array('logout', 'ranking_list');
-
-			switch ($this->Auth_cargo_id) {
-				//Prefeito
-				case 1:
-				//Secretario
-				case 2:
-					if (in_array($this->params['controller'], $black_list_a)) {
-						if (!in_array($this->params['action'], $white_list_actions)) {
-							throw new MethodNotAllowedException ("Você não tem permissão para acessar esta página");	
-						}
-					}
-					break;
-				//TI
-				case 3:
-					# code...
-					break;
-				
-				default:
-					# code...
-					break;
-			}
-
 		} else {
 			if ($this->params['controller'] == 'usuarios' AND $this->params['action'] == 'login') {
 
@@ -181,10 +109,13 @@ class AppController extends Controller {
 
 	public function validationErrorsToList($array) {
 		$errors = '';
-		foreach ($array as $validationError) {
-			$errors .= $validationError . '<br>';
+		foreach ($array as $key => $item) {
+			$errors .= '<strong>' . $key . '</strong>:<br>';
+			foreach ($item as $i) {
+				$errors .= $i . '<br>';
+			}
 		}
-		return $erros;
+		return $errors;
 	}
 
 }

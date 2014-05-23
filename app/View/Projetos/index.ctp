@@ -10,20 +10,22 @@
 </div>
 
 <div class="wrap-internal-page">
-	<div class="row">
-		<div class="col-md-12">
-			<?php
-			echo $this->Html->link(
-				"Novo projeto",
-				array('action'=> 'add'),
-				array('class'=> 'btn btn-success btn-novo',
-					'escape'=> false
-				));
-			?>
+	<?php if ($Auth_cargo_id == 1): ?><!-- Somente prefeito -->
+		<div class="row">
+			<div class="col-md-12">
+				<?php
+				echo $this->Html->link(
+					"Novo projeto",
+					array('action'=> 'add'),
+					array('class'=> 'btn btn-success btn-novo',
+						'escape'=> false
+					));
+				?>
+			</div>
 		</div>
-	</div>
-	
-	<br>
+		
+		<br>
+	<?php endif ?><!-- Somente prefeito -->
 	<div class="well well-sm">
 		<div class="row clearfix">
 			<div class="col-md-12">
@@ -126,23 +128,25 @@
 							</td>
 							<td id="td-quick-action">
 								<?php echo $projeto['StatusProjeto']['name']; ?>
-								<div style="position: relative;">
-									<?php
-										echo $this->Html->link(
-											'<span class=\'glyphicon glyphicon-refresh\'></span>',
-											array(
-												'controller' => 'projetos',
-												'action' => 'changeStatusModal',
-												$projeto['Projeto']['id'],
-											),
-											array(
-												'escape'=> false,
-												'id'=> 'open-modal',
-												'title'=> 'Alterar status',
-												'class'=> 'btn btn-default btn-xs btn-quick-action tt')
-										);
-									?>
-								</div>
+								<?php if ($Auth_cargo_id == 1): ?><!-- Somente prefeito -->
+									<div style="position: relative;">
+										<?php
+											echo $this->Html->link(
+												'<span class=\'glyphicon glyphicon-refresh\'></span>',
+												array(
+													'controller' => 'projetos',
+													'action' => 'changeStatusModal',
+													$projeto['Projeto']['id'],
+												),
+												array(
+													'escape'=> false,
+													'id'=> 'open-modal',
+													'title'=> 'Alterar status',
+													'class'=> 'btn btn-default btn-xs btn-quick-action tt')
+											);
+										?>
+									</div>
+								<?php endif ?>
 							</td>
 							<td>
 								<?php if (!empty($projeto['Indicacao']['Secretaria']['name'])): ?>
@@ -153,36 +157,38 @@
 							</td>
 							<td>
 								<?php echo $this->Time->format('d/m/y', $projeto['Projeto']['created']); ?>
-							</td>	
-							<td class="text-center" style="width:90px;">
-								<?php
-									echo $this->Html->link(
-										"<span class='glyphicon glyphicon-pencil'></span>",
-										array(
-											'action' => 'edit',
-											$projeto['Projeto']['id']),
-										array(
-											'class'=> 'btn btn-sm btn-primary tt',
-											'title'=> 'Editar',
-											'escape'=> false
-										)
-									);
-									echo "&nbsp;";
-									echo $this->Form->postLink(
-										"<span class='glyphicon glyphicon-remove'></span>",
-										array(
-											'action' => 'delete',
-											$projeto['Projeto']['id']),
-										array(
-											'class'=> 'btn btn-sm btn-danger tt',
-											'title'=> 'Remover',
-											'escape'=> false
-										),
-										__('Você tem certeza que deseja deletar # %s?'
-										, $projeto['Projeto']['id'])
-									);
-								?>
 							</td>
+							<?php if ($Auth_cargo_id == 1): ?><!-- Somente prefeito -->
+								<td class="text-center" style="width:90px;">
+									<?php
+										echo $this->Html->link(
+											"<span class='glyphicon glyphicon-pencil'></span>",
+											array(
+												'action' => 'edit',
+												$projeto['Projeto']['id']),
+											array(
+												'class'=> 'btn btn-sm btn-primary tt',
+												'title'=> 'Editar',
+												'escape'=> false
+											)
+										);
+										echo "&nbsp;";
+										echo $this->Form->postLink(
+											"<span class='glyphicon glyphicon-remove'></span>",
+											array(
+												'action' => 'delete',
+												$projeto['Projeto']['id']),
+											array(
+												'class'=> 'btn btn-sm btn-danger tt',
+												'title'=> 'Remover',
+												'escape'=> false
+											),
+											__('Você tem certeza que deseja deletar # %s?'
+											, $projeto['Projeto']['id'])
+										);
+									?>
+								</td>
+							<?php endif ?>
 						<tr>					
 					<?php endforeach; ?>
 				<?php else: ?>

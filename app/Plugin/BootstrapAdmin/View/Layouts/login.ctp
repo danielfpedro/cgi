@@ -33,7 +33,7 @@
 </head>
 <body>
 	
-	<?php echo $this->element('BootstrapAdmin.navbar_simple') ?>
+	<?php //echo $this->element('BootstrapAdmin.navbar_simple') ?>
 
 	<div class="container">
 		<div class="row">

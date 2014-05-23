@@ -24,6 +24,17 @@ public $layout = 'BootstrapAdmin.default';
 	public function index($indicacao_id = null) {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->TrocaMensagem->save($this->request->data)) {
+				//Salva a notificação
+				$this->loadModel('Notificacao');
+				$this->Notificacao->create();
+				$this->Notificacao->save(
+					array(
+						'tipo'=> 3,
+						'notificacao'=>'Você tem uma nova mensagem',
+						'usuario_id'=> $this->request->data['TrocaMensagem']['destinatario'],
+						'identificador'=> $this->request->data['TrocaMensagem']['indicacao_id']
+						));
+				// ** Salva notificacao
 			} else {
 				$this->Session->flash('Ocorreu um erro ao enviar a sua mensagem', 'default', array('class'=> 'alert alert-danger'));
 			}
@@ -41,7 +52,41 @@ public $layout = 'BootstrapAdmin.default';
 
 		$this->set('trocaMensagens', $this->Paginator->paginate());
 
-		$this->set(compact('indicacao'));
+		$remetente = $this->Auth_usuario_id;
+
+		$this->loadModel('Usuario');
+		//Se for prefeito
+		if ($this->Auth_cargo_id == 1) {
+			//Seleciona o secretaria da secretaria respnsavel pela indicação;
+			$secretario_atual = $this->Usuario->find(
+				'first',
+				array(
+					'conditions'=> array(
+						'Usuario.secretaria_id'=> $indicacao['Secretaria']['id'], 'Usuario.ativo = 1')));
+
+			if (!empty($secretario_atual)) {
+				$destinatario = $secretario_atual['Usuario']['id'];
+			} else {
+				throw new InternalErrorException("O sistema não tem nenhum secretaria da secretaria responsavel pelo projeto");	
+			}
+		//Se for secretaria
+		} elseif ($this->Auth_cargo_id == 2) {
+			//Pega o prefeito atual
+			$prefeito_atual = $this->Usuario->find(
+				'first',
+				array('conditions'=> array('Usuario.cargo_id'=> 1, 'Usuario.ativo = 1')));
+
+			if (!empty($prefeito_atual)) {
+				$destinatario = $prefeito_atual['Usuario']['id'];
+			} else {
+				throw new InternalErrorException("O sistema não tem nenhum prefeito ativo");	
+			}
+		} else {
+			throw new MethodNotAllowed("Você não pode executar esta ação");
+			
+		}
+		$this->set(compact('indicacao','destinatario','remetente'));
+
 	}
 
 /**

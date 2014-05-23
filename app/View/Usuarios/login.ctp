@@ -4,7 +4,7 @@
 	</div>
 	<div class="col-md-4">
 		<div class="well">
-			<?php echo $this->Form->create('Usuario', $options = array()); ?>
+			<?php echo $this->Form->create('Usuario'); ?>
 				<div class="form-group">
 					<?php echo $this->Form->input(
 						'email',
@@ -19,6 +19,7 @@
 					<?php echo $this->Form->input(
 						'senha',
 						array(
+							'type'=> 'password',
 							'label'=> false,
 							'placeholder'=> 'Senha',
 							'class'=> 'form-control input-lg')); ?>
@@ -28,5 +29,7 @@
 				</div>
 			<?php echo $this->Form->end(); ?>
 		</div>
+
+		<?php echo $this->Session->flash(); ?>
 	</div>
 </div>

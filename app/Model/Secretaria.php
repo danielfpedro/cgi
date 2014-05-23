@@ -8,6 +8,14 @@ App::uses('AppModel', 'Model');
  */
 class Secretaria extends AppModel {
 
+	public $virtualFields = array(
+			'totalIndicacoes' => 'SELECT count(*) FROM indicacoes iTemp WHERE iTemp.secretaria_id = Secretaria.id',
+			'totalIndicacoesAprovadas' =>
+				'SELECT count(*)
+					FROM indicacoes iTemp
+					WHERE iTemp.secretaria_id = Secretaria.id AND iTemp.status_indicacao_id = 2'
+		);
+
 /**
  * Validation rules
  *

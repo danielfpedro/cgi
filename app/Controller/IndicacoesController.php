@@ -24,6 +24,7 @@ class IndicacoesController extends AppController {
 
 			$q = str_replace(' ', '%', $this->request->query['term']);
 			$options['conditions'][] = array(
+				'Indicacao.status_indicacao_id'=> 2,
 				'Indicacao.uid LIKE'=> '%'.$q.'%',
 				'Indicacao.id !='=> $excluir_indicacoes
 				);
@@ -216,6 +217,15 @@ class IndicacoesController extends AppController {
 			$this->request->data['Indicacao']['data_indicacao'] = $this->DataUtil->setPadrao($this->request->data['Indicacao']['data_indicacao']);
 			$this->Indicacao->create();
 			if ($this->Indicacao->save($this->request->data)) {
+				//Salva a notificação
+				$this->Notificacao->create();
+				$this->Notificacao->save(
+					array(
+						'tipo'=> 1,
+						'notificacao'=>'Uma nova indicação foi criada',
+						'identificador'=> $this->Indicacao->id
+						));
+				// ** Salva notificacao
 				$this->Session->setFlash(__('A <strong>indicação</strong> foi salva com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {

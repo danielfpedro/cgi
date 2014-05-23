@@ -1,11 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Notificacao Model
+ * NotificacoesLida Model
  *
  * @property Usuario $Usuario
  */
-class Notificacao extends AppModel {
+class NotificacoesLida extends AppModel {
 
 /**
  * Validation rules
@@ -13,9 +13,9 @@ class Notificacao extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'notificacao' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+		'last_view' => array(
+			'datetime' => array(
+				'rule' => array('datetime'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -23,17 +23,7 @@ class Notificacao extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'tipo' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'lido' => array(
+		'usuario_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',

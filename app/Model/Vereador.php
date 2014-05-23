@@ -8,6 +8,15 @@ App::uses('AppModel', 'Model');
  */
 class Vereador extends AppModel {
 
+public $virtualFields = array(
+		'totalIndicacoes' => 'SELECT count(*) FROM indicacoes_vereadores WHERE vereador_id = Vereador.id',
+		'totalIndicacoesAprovadas' =>
+			'SELECT count(*)
+				FROM indicacoes_vereadores vTemp
+				WHERE vTemp.vereador_id = Vereador.id AND indicacao_id
+				IN (SELECT id FROM indicacoes iTemp WHERE status_indicacao_id = 2)'
+	);
+
 /**
  * Validation rules
  *

@@ -1,11 +1,11 @@
 <?php
-App::uses('Notificacao', 'Model');
+App::uses('NotificacoesLida', 'Model');
 
 /**
- * Notificacao Test Case
+ * NotificacoesLida Test Case
  *
  */
-class NotificacaoTest extends CakeTestCase {
+class NotificacoesLidaTest extends CakeTestCase {
 
 /**
  * Fixtures
@@ -13,7 +13,7 @@ class NotificacaoTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.notificacao',
+		'app.notificacoes_lida',
 		'app.usuario',
 		'app.cargo',
 		'app.secretaria',
@@ -35,7 +35,7 @@ class NotificacaoTest extends CakeTestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$this->Notificacao = ClassRegistry::init('Notificacao');
+		$this->NotificacoesLida = ClassRegistry::init('NotificacoesLida');
 	}
 
 /**
@@ -44,7 +44,7 @@ class NotificacaoTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		unset($this->Notificacao);
+		unset($this->NotificacoesLida);
 
 		parent::tearDown();
 	}

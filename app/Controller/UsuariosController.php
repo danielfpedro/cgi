@@ -1,6 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+
 /**
  * Usuarios Controller
  *
@@ -10,9 +11,66 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 class UsuariosController extends AppController {
 
 	public $layout = 'BootstrapAdmin.default';	
+	
+	/**
+	 * beforeFilter callback
+	 *
+	 * @return void
+	 */
+		public function beforeFilter() {
+			parent::beforeFilter();
+		}
+	
 
 	public function login() {
 		$this->layout = 'BootstrapAdmin.login';
+
+		// $passwordHasher = new SimplePasswordHasher(array('hashType' => 'sha256'));
+		// echo $passwordHasher->hash('123mudar');
+		// exit();
+
+		// if ($this->Auth->login()) {
+		// 	$this->redirect($this->Auth->redirect());
+		// } else {
+		// 	$this->request->data['Usuario']['senha'] = '';
+		// 	$this->Session->setFlash($this->Auth->authError,'default', array('class'=> 'alert alert-danger'));
+		// }
+
+
+		if ($this->request->is('post')) {
+			$options = array();
+
+			$username = $this->request->data['Usuario']['email'];
+			$passwordHasher = new SimplePasswordHasher(array('hashType' => 'sha256'));
+			$senha = $passwordHasher->hash(
+				$this->request->data['Usuario']['senha']
+			);
+			
+			$options['conditions'] = array('Usuario.email'=> $username, 'Usuario.senha'=> $senha);
+			$usuario = $this->Usuario->find('first', $options);
+			// Debugger::dump($usuario);
+			// exit();
+			if (!empty($usuario)) {
+
+				$this->Session->write('Auth.flag', true);
+				$this->Session->write('Auth.usuario_id', $usuario['Usuario']['id']);
+				$this->Session->write('Auth.nome', $usuario['Usuario']['name']);
+				$this->Session->write('Auth.email', $usuario['Usuario']['email']);
+				$this->Session->write('Auth.cargo_id', $usuario['Cargo']['id']);
+				$this->Session->write('Auth.cargo', $usuario['Cargo']['name']);
+				$this->Session->write('Auth.secretaria_id', $usuario['Secretaria']['id']);
+				$this->Session->write('Auth.secretaria', $usuario['Secretaria']['name']);
+				
+				return $this->redirect(array('controller'=> 'indicacoes', 'action'=> 'index'));
+			} else {
+				$this->Session->setFlash('Combinação email/senha incorreta.', array('class'=> 'alert alert-danger'));
+			}
+		}
+	}
+
+	public function logout() {
+		$this->Session->destroy();
+		return $this->redirect(array('controller'=> 'usuarios', 'action'=> 'login'));
 	}
 
 	public function meu_usuario() {

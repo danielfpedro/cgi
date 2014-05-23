@@ -17,6 +17,7 @@
 		echo $this->Html->script('/BootstrapAdmin/js/jquery.min');
 
 		echo $this->Html->script('/BootstrapAdmin/js/bootstrap.min');
+		echo $this->Html->script('/BootstrapAdmin/js/comum');
 	?>
 	<script type="text/javascript">
 		$(function(){

@@ -122,10 +122,24 @@ class ProjetosController extends AppController {
 
 			$this->Projeto->create();
 			if ($this->Projeto->save($this->request->data)) {
+				
+				//Salva a notificação
+				$this->Notificacao->create();
+				$this->Notificacao->save(
+					array(
+						'tipo'=> 2,
+						'notificacao'=>'Um novo projeto foi criado',
+						'identificador'=> $this->Projeto->id
+						));
+				// ** Salva notificacao
+
 				$this->Session->setFlash(__('O <strong>projeto</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('O <strong>projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				Debugger::dump($this->Projeto->validationErrors);
+				exit();
+				$this->Session->setFlash(
+					__('O <strong>projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		}
 

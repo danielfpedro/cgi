@@ -24,8 +24,11 @@
 						//Depois trocar esse valor pelo id do usuario logado atualmente
 					?>
 					
-					<?php echo $this->Form->input('destinatario', array('type'=> 'hidden', 'value'=> 2)); ?>
-					<?php echo $this->Form->input('indicacao_id', array('type'=> 'hidden', 'value'=> $indicacao['Indicacao']['id'])); ?>
+					<?php echo $this->Form->input('usuario_id', array('label'=> 'remetente', 'type'=> 'hidden', 'value'=> $remetente)); ?>
+					<?php echo $this->Form->input('destinatario', array('type'=> 'hidden', 'value'=> $destinatario)); ?>
+
+					<?php echo $this->Form->input('indicacao_id',
+						array('type'=> 'hidden', 'value'=> $indicacao['Indicacao']['id'])); ?>
 					<?php echo $this->Form->input('mensagem', array('label'=> false, 'class'=> 'form-control')); ?>
 				</div>
 				<button type="submit" class="btn btn-primary btn-block">
