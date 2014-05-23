@@ -1,8 +1,6 @@
-<div class="row" style="margin-top: 200px;">
-	<div class="col-md-4 col-md-offset-2">
-		tey
-	</div>
-	<div class="col-md-4">
+<div class="row" style="margin-top: 150px;">
+	<div class="col-md-4 col-md-offset-4 text-center">
+		<?php echo $this->Html->image('logo_prefeitura-pirai.png', array('style'=> 'margin-bottom: 40px;')); ?>
 		<div class="well">
 			<?php echo $this->Form->create('Usuario'); ?>
 				<div class="form-group">
@@ -29,7 +27,6 @@
 				</div>
 			<?php echo $this->Form->end(); ?>
 		</div>
-
 		<?php echo $this->Session->flash(); ?>
 	</div>
 </div>

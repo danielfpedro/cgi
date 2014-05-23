@@ -65,10 +65,10 @@
 </div>
 
 <!-- GEOCOMPLETE -->
-<div class="form-group">
+<!-- <div class="form-group">
 	<input type="text" id="geocomplete" class="form-control" placeholder="Digite um local para marcar no mapa">
 	<div id="map-canvas"></div>
-</div>
+</div> -->
 <!-- GEOCOMPLETE -->
 
 <div class="form-group">

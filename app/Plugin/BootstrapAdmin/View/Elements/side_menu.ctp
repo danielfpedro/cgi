@@ -46,7 +46,7 @@ $active_found = false;
 		</li>
 	<?php endif ?>
 
-	<?php if ($Auth_cargo_id == 1 OR $Auth_cargo_id == 2): ?><!-- Somente prefeito e secretaria -->
+	<?php if ($Auth_cargo_id == 1): ?><!-- Somente prefeito e secretaria -->
 		<li class="text-muted" style="font-size: 11px; margin: 15px 0 5px 10px; text-transform: uppercase;">Relatórios</li>
 		<?php foreach ($items_menu_relatorios as $item): ?>
 			<?php
