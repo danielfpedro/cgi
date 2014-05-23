@@ -95,10 +95,26 @@ class IndicacoesController extends AppController {
 		$indicacao = $this->Indicacao->find('first', array('conditions'=> array('Indicacao.id'=> $id)));
 		if (!empty($indicacao)) {
 			if ($this->request->is(array('post', 'put'))) {
-				if (!$this->Indicacao->save($this->request->data)) {
-					$this->Session->setFlash('Ocorreu um erro ao salvar a secretária', 'default', array('class'=> 'alert alert-danger'));
+				if ($this->Indicacao->save($this->request->data)) {
+					$prefeito_atual = $this->Usuario->find('first', array('conditions'=> array('Usuario.cargo_id'=> 1, 'Usuario.ativo'=> 1)));
+					if (!empty($prefeito_atual)) {
+						//Salva a notificação
+						$this->Notificacao->create();
+						$this->Notificacao->save(
+							array(
+								'tipo'=> 1,
+								'usuario_id'=> $prefeito_atual['Usuario']['id'],
+								'notificacao'=> 'A indicação "'.$indicacao['Indicacao']['uid'].'" recebeu um parecer',
+								'identificador'=> $this->Indicacao->id
+								));
+						// ** Salva notificacao
+					} else {
+						$this->Session->setFlash('O Sistema não possui um prefeito ativo para recerber a notificação do parecer', 'default', array('class'=> 'alert alert-danger'));
+					}
+				} else {
+					$this->Session->setFlash('Ocorreu um erro ao salvar o Parecer', 'default', array('class'=> 'alert alert-danger'));
 				}
-				$this->redirect(array('controller'=> 'indicacoes', 'action'=> 'index'));
+				return $this->redirect(array('controller'=> 'indicacoes', 'action'=> 'index'));	
 			} else {
 				$this->request->data = $indicacao;
 			}

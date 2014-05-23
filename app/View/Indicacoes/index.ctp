@@ -185,11 +185,16 @@
 								<?php
 									// Somente secretaria
 									//Checa se a mensagem é da secretaria logado e ativa o btn ou não
-									if ($Auth_cargo_id == 1 OR ($indicacao['Secretaria']['id'] == $Auth_secretaria_id)) {
-										$active = 'enabled';
+									if ($indicacao['Secretaria']['id'] != Null) {
+										if ($indicacao['Secretaria']['id'] != Null AND $Auth_cargo_id == 1 OR ($indicacao['Secretaria']['id'] == $Auth_secretaria_id)) {
+											$active = 'enabled';
+										} else {
+											$active = 'disabled';
+										}
 									} else {
 										$active = 'disabled';
 									}
+									
 									if ($Auth_cargo_id == 2) {
 										echo $this->Html->link(
 											"<span class='glyphicon glyphicon-asterisk'></span>",

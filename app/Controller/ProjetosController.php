@@ -112,34 +112,38 @@ class ProjetosController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			// $this->Projeto->recursive = -1;
-			// $this->Projeto->contain = array('Indicacao'=> array('Usuario'));
-			$this->request->data['Projeto']['status_projeto_id'] = 1;
-			
-			//Arruma formatação monetário
-			$this->request->data['Projeto']['valor'] = str_replace('.', '', $this->request->data['Projeto']['valor']);
-			$this->request->data['Projeto']['valor'] = str_replace(',', '.', $this->request->data['Projeto']['valor']);
-
-			$this->Projeto->create();
-			if ($this->Projeto->save($this->request->data)) {
+			if ($this->request->data['Projeto']['indicacao_id'] > 0) {
+				// $this->Projeto->recursive = -1;
+				// $this->Projeto->contain = array('Indicacao'=> array('Usuario'));
+				$this->request->data['Projeto']['status_projeto_id'] = 1;
 				
-				//Salva a notificação
-				$this->Notificacao->create();
-				$this->Notificacao->save(
-					array(
-						'tipo'=> 2,
-						'notificacao'=>'Um novo projeto foi criado',
-						'identificador'=> $this->Projeto->id
-						));
-				// ** Salva notificacao
+				//Arruma formatação monetário
+				$this->request->data['Projeto']['valor'] = str_replace('.', '', $this->request->data['Projeto']['valor']);
+				$this->request->data['Projeto']['valor'] = str_replace(',', '.', $this->request->data['Projeto']['valor']);
 
-				$this->Session->setFlash(__('O <strong>projeto</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
-				return $this->redirect(array('action' => 'index'));
+				$this->Projeto->create();
+				if ($this->Projeto->save($this->request->data)) {
+					
+					//Salva a notificação
+					$this->Notificacao->create();
+					$this->Notificacao->save(
+						array(
+							'tipo'=> 2,
+							'notificacao'=>'Um novo projeto foi criado',
+							'identificador'=> $this->Projeto->id
+							));
+					// ** Salva notificacao
+
+					$this->Session->setFlash(__('O <strong>projeto</strong> foi salvo com sucesso.'), 'default', array('class'=> 'alert alert-success'));
+					return $this->redirect(array('action' => 'index'));
+				} else {
+					Debugger::dump($this->Projeto->validationErrors);
+					exit();
+					$this->Session->setFlash(
+						__('O <strong>projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				}
 			} else {
-				Debugger::dump($this->Projeto->validationErrors);
-				exit();
-				$this->Session->setFlash(
-					__('O <strong>projeto</strong> não pode ser salvo. Por favor, tente novamente.'), 'default', array('class'=> 'alert alert-danger'));
+				$this->Session->setFlash(__('Você não adicionou uma indicação válida.'), 'default', array('class'=> 'alert alert-danger'));
 			}
 		}
 

@@ -87,29 +87,31 @@ class AppController extends Controller {
 							)
 							)));
 
+			$this->loadModel('Usuario');
 			$total_notificacoes_novas = 0;
-			$this->loadModel('NotificacoesLida');
-			$last_view = $this->NotificacoesLida->find('first', array(
-				'order'=> 'last_view DESC',
+			$last_view = $this->Usuario->find('first', array(
 				'conditions'=> array(
-					'NotificacoesLida.usuario_id'=> $this->Auth_usuario_id
+					'Usuario.id'=> $this->Auth_usuario_id
 				)));
-			if (!empty($last_view)) {
-				$last_view = $last_view['NotificacoesLida']['last_view'];
+
+			if (!empty($last_view['Usuario']['ultima_notificacao_lida'])) {
+				$last_view = $last_view['Usuario']['ultima_notificacao_lida'];
 				// Debugger::dump($last_view);
 				// exit();
 			} else {
 				$last_view = '0000-00-00 00:00:00';
 			}
+
 			$total_notificacoes_novas = $this->Notificacao->find('count', array(
 					'conditions'=> array(
 						'or'=> array(
 							array('Notificacao.usuario_id'=> Null),
-							array('Notificacao.usuario_id'=> $this->Auth_usuario_id),array()
+							array('Notificacao.usuario_id'=> $this->Auth_usuario_id)
 							),
 						'Notificacao.created >'=> $last_view)));
 			
-
+			// Debugger::dump($total_notificacoes_novas);
+			// exit();
 			$this->set(compact('notificacoes', 'total_notificacoes_novas'));
 			# code...
 		}
@@ -147,7 +149,7 @@ class AppController extends Controller {
 				'secretarias',
 				'statusIndicacoes', 'statusProjetos', 'bairros', 'usuarios');
 
-			$white_list_actions = array('logout', 'ranking_list');
+			$white_list_actions = array('logout', 'ranking_list', 'add_ajax');
 
 			switch ($this->Auth_cargo_id) {
 				//Prefeito

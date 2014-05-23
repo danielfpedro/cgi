@@ -1,4 +1,4 @@
-<?php
+	<?php
 App::uses('AppController', 'Controller');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
@@ -21,6 +21,11 @@ class UsuariosController extends AppController {
 			parent::beforeFilter();
 		}
 	
+
+	public function add_ajax() {
+		$this->Usuario->save(array('id'=> $this->Auth_usuario_id, 'ultima_notificacao_lida'=> date("Y-m-d H:i:s")));
+		$this->autoRender = false;
+	}
 
 	public function login() {
 		$this->layout = 'BootstrapAdmin.login';
@@ -63,7 +68,7 @@ class UsuariosController extends AppController {
 				
 				return $this->redirect(array('controller'=> 'indicacoes', 'action'=> 'index'));
 			} else {
-				$this->Session->setFlash('Combinação email/senha incorreta.', array('class'=> 'alert alert-danger'));
+				$this->Session->setFlash('Combinação email/senha incorreta.', 'default', array('class'=> 'alert alert-danger'));
 			}
 		}
 	}
@@ -74,7 +79,7 @@ class UsuariosController extends AppController {
 	}
 
 	public function meu_usuario() {
-		$id = 9;
+		$id = $this->Auth_usuario_id;
 		if (!$this->Usuario->exists($id)) {
 			throw new NotFoundException(__('Usuário inválido'));
 		}

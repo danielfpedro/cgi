@@ -57,7 +57,7 @@ public $layout = 'BootstrapAdmin.default';
 		$this->loadModel('Usuario');
 		//Se for prefeito
 		if ($this->Auth_cargo_id == 1) {
-			//Seleciona o secretaria da secretaria respnsavel pela indicação;
+			//Seleciona o secretario da secretaria respnsavel pela indicação;
 			$secretario_atual = $this->Usuario->find(
 				'first',
 				array(

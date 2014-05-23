@@ -24,7 +24,7 @@
 						<div class="col-md-3">
 							<?php echo $this->Form->input(
 								'fake_password',
-								array('label'=> 'Nova Senha', 'class'=> 'form-control')); ?>
+								array('type'=> 'password', 'label'=> 'Nova Senha', 'class'=> 'form-control')); ?>
 						</div>
 					</div>
 				</div>
